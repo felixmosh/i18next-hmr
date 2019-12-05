@@ -12,4 +12,4 @@ I18Next HMR 🔥webpack plugin that allows to reload translation resources on cl
 $ npm install --save-dev i18next-hmr
 ```
 
-** This is an under dev **
+**This plugin is under development**
