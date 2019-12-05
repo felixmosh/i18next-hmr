@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'development') {
 The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed.
 
 ### Client side
-The lib will invoke webpacks hmr to update client side, that will refetch (with cache killer) the updated translation json, and trigger [`i18n.changelanguage(lang)`]([https://www.i18next.com/overview/api#changelanguage](https://www.i18next.com/overview/api#changelanguage)) to trigger listeners (in React app it will update the UI).
+The lib will invoke webpacks hmr to update client side, that will refetch (with cache killer) the updated translation json, and trigger [`i18n.changelanguage(lang)`](https://www.i18next.com/overview/api#changelanguage) to trigger listeners (in React app it will update the UI).
 
 ## Example
 A working [`nextjs`]([https://github.com/zeit/next.js](https://github.com/zeit/next.js)) with [`next-i18next`]([https://github.com/isaachinman/next-i18next](https://github.com/isaachinman/next-i18next)) example can be found in the [`examples`](https://github.com/felixmosh/i18next-hmr/tree/master/examples) folder.
