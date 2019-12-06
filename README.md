@@ -33,9 +33,33 @@ module.exports = {
 const i18next = require('i18next'); 
 i18next.init(options, callback);    
 if (process.env.NODE_ENV === 'development') {    
-  const { applyI18NextHMR } = require('i18next-hmr');    
-  applyI18NextHMR(i18next); 
-} 
+  const { applyClientHMR } = require('i18next-hmr');    
+  applyClientHMR(i18next); 
+}
+```
+
+<!-- prettier-ignore-start -->    
+```js 
+// server.js 
+const express = require('express');
+
+const i18n = require('./i18n');
+
+if (process.env.NODE_ENV === 'development') {
+  const { applyServerHMR } = require('i18next-hmr');
+  applyServerHMR(i18n);
+}
+
+const port = process.env.PORT || 3000;
+
+(async () => {
+  const server = express();
+  server.get('*', (req, res) => handle(req, res));
+
+  await server.listen(port);
+  console.log(`> Ready on http://localhost:${port}`);
+})();
+
 ``` 
 Start the app with `NODE_ENV=development`
    

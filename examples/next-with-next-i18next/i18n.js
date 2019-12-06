@@ -23,9 +23,8 @@ const nextI18Next = new NextI18Next({
 });
 
 if (process.env.NODE_ENV === 'development') {
-  const { applyI18NextHMR } = require('i18next-hmr');
-
-  applyI18NextHMR(nextI18Next.i18n);
+  const { applyClientHMR } = require('i18next-hmr');
+  applyClientHMR(nextI18Next.i18n);
 }
 
 module.exports = nextI18Next;

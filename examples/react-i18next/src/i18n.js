@@ -23,8 +23,8 @@ i18n
   });
 
 if(process.env.NODE_ENV === 'development') {
-  const {applyI18NextHMR} = require('i18next-hmr');
-  applyI18NextHMR(i18n);
+  const { applyClientHMR } = require('i18next-hmr');
+  applyClientHMR(i18n);
 }
 
 export default i18n;
