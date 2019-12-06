@@ -1,7 +1,8 @@
-
+# i18next-hmr
+[![npm](https://img.shields.io/npm/v/i18next-hmr.svg)](https://www.npmjs.com/package/i18next-hmr)
+ 
+I18Next HMR 🔥webpack plugin that allows to reload translation resources on client &amp; server    
   
-# i18next-hmr I18Next HMR 🔥webpack plugin that allows to reload translation resources on client &amp; server    
-**This lib is under development**   
 ## Requirements    
  - Node.js v8 or above    
 - Webpack 4.x    
@@ -10,7 +11,7 @@
  ```sh 
  $ npm install --save-dev i18next-hmr 
  ```    
- ## Usage    
+## Usage    
  Add the plugin to your webpack config (or nextjs).    
 <!-- prettier-ignore-start -->
 ```js 

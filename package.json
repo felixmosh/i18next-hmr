@@ -2,6 +2,12 @@
   "name": "i18next-hmr",
   "version": "1.0.0",
   "description": "I18Next HMR webpack plugin that allows to reload translation resources on client & server.",
+  "homepage": "https://github.com/felixmosh/i18next-hmr",
+  "bugs": "https://github.com/felixmosh/i18next-hmr/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felixmosh/i18next-hmr"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
