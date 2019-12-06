@@ -1,49 +1,49 @@
 
-# i18next-hmr  
-I18Next HMR 🔥webpack plugin that allows to reload translation resources on client &amp; server  
-**This lib is under development**    
+  
+# i18next-hmr I18Next HMR 🔥webpack plugin that allows to reload translation resources on client &amp; server    
+**This lib is under development**   
+## Requirements    
+ - Node.js v8 or above    
+- Webpack 4.x    
+    
+## Installation    
+ ```sh 
+ $ npm install --save-dev i18next-hmr 
+ ```    
+ ## Usage    
+ Add the plugin to your webpack config (or nextjs).    
+<!-- prettier-ignore-start -->
+```js 
+// webpack.config.js 
+const { I18NextHMRPlugin } = require('i18next-hmr/plugin');    
 
-## Requirements  
+module.exports = {  
+  ...
+  plugins: [    
+    new I18NextHMRPlugin({  
+      isServer: false, // for client only    
+      localesDir: path.resolve(__dirname, 'static/locales'),    
+    }) 
+  ]
+}; 
+```
+<!-- prettier-ignore-start -->    
+```js 
+// i18next.config.js 
+const i18next = require('i18next'); 
+i18next.init(options, callback);    
+if (process.env.NODE_ENV === 'development') {    
+  const { applyI18NextHMR } = require('i18next-hmr');    
+  applyI18NextHMR(i18next); 
+} 
+``` 
+Start the app with `NODE_ENV=development`
+   
+ ### Server side  
+The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed. 
   
-- Node.js v8 or above  
-- Webpack 4.x  
+### Client side  
+The lib will invoke webpacks hmr to update client side, that will refetch (with cache killer) the updated translation json, and trigger [`i18n.changelanguage(lang)`]([https://www.i18next.com/overview/api#changelanguage](https://www.i18next.com/overview/api#changelanguage)) to trigger listeners (in React app it will update the UI).  
   
-## Installation  
-  
-```sh  
-$ npm install --save-dev i18next-hmr  
-```  
-  
-## Usage  
-  
-Add the plugin to your webpack config (or nextjs).  
-  
-```js  
-// webpack.config.js  
-const { I18nextHMRPlugin } = require('i18next-hmr/plugin');  
-  
-module.exports = {  module: {  
- ... },  plugins: [  
- new I18nextHMRPlugin({  isServer: false, // for client only  
-  localesDir: path.resolve(__dirname, 'static/locales'),  
- }) ]};  
-```  
-  
-```js  
-// i18next.config.js  
-const i18next = require('i18next');   
-i18next.init(options, callback);  
-  
-if (process.env.NODE_ENV === 'development') {  
- const { applyI18nextHMR } = require('i18next-hmr');  
- applyI18nextHMR(i18next);  
-}  
-```  
- ### Server side
-The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed.
-
-### Client side
-The lib will invoke webpacks hmr to update client side, that will refetch (with cache killer) the updated translation json, and trigger [`i18n.changelanguage(lang)`](https://www.i18next.com/overview/api#changelanguage) to trigger listeners (in React app it will update the UI).
-
-## Example
+## Example  
 A working [`nextjs`]([https://github.com/zeit/next.js](https://github.com/zeit/next.js)) with [`next-i18next`]([https://github.com/isaachinman/next-i18next](https://github.com/isaachinman/next-i18next)) example can be found in the [`examples`](https://github.com/felixmosh/i18next-hmr/tree/master/examples) folder.

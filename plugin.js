@@ -1,3 +1,3 @@
 module.exports = {
-  I18nextHMRPlugin: require('./lib/plugin'),
+  I18NextHMRPlugin: require('./lib/plugin'),
 };
