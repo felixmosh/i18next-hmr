@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'development') {
 ``` 
 Start the app with `NODE_ENV=development`
    
- ### Server side  
+### Server side  
 The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed. 
   
 ### Client side  
