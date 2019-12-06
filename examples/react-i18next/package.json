@@ -138,6 +138,6 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "i18next-hmr": "^1.0.2"
+    "i18next-hmr": "^1.1.0"
   }
 }
