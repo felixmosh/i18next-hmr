@@ -21,7 +21,6 @@ module.exports = {
   ...
   plugins: [    
     new I18NextHMRPlugin({  
-      isServer: false, // for client only    
       localesDir: path.resolve(__dirname, 'static/locales'),    
     }) 
   ]
