@@ -7,11 +7,13 @@
     "node": ">=8"
   },
   "scripts": {
-    "dev": "node index.js",
+    "start": "NODE_ENV=development node index.js",
     "build": "next build",
-    "start": "NODE_ENV=production node index.js"
+    "start:prod": "NODE_ENV=production node index.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "i18next-hmr": "^1.0.2"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "i18next": "^14.0.1",
