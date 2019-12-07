@@ -1,5 +1,6 @@
 # i18next-hmr
 [![npm](https://img.shields.io/npm/v/i18next-hmr.svg)](https://www.npmjs.com/package/i18next-hmr)
+[![CircleCI](https://circleci.com/gh/felixmosh/i18next-hmr.svg?style=svg)](https://circleci.com/gh/felixmosh/i18next-hmr)
  
 I18Next HMR 🔥webpack plugin that allows to reload translation resources on client &amp; server    
   
