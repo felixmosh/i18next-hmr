@@ -73,4 +73,5 @@ The lib will invoke webpacks hmr to update client side, that will re-fetch (with
 ## Example  
 A working [`nextjs`](https://github.com/zeit/next.js) with [`next-i18next`](https://github.com/isaachinman/next-i18next) example can be found in the [`examples`](https://github.com/felixmosh/i18next-hmr/tree/master/examples) folder.
 
-![screenshot](https://user-images.githubusercontent.com/9304194/70315852-1c8ac580-1823-11ea-9b74-f265020cc6f2.gif)
+![screenshot](https://user-images.githubusercontent.com/9304194/70473602-0ce8d680-1ada-11ea-917d-0235b380bfdd.gif)
+
