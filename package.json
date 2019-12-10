@@ -21,9 +21,7 @@
   ],
   "author": "felixmosh",
   "license": "MIT",
-  "dependencies": {
-    "chalk": "^3.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.14",
