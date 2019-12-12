@@ -1,2 +1,4 @@
 examples
 .idea
+__tests__
+.circleci
