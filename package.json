@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/felixmosh/i18next-hmr"
   },
-  "main": "index.js",
+  "main": "client.js",
   "types": "types.d.ts",
   "scripts": {
     "test": "jest"

@@ -34,7 +34,7 @@ module.exports = {
 const i18next = require('i18next'); 
 i18next.init(options, callback);    
 if (process.env.NODE_ENV === 'development') {    
-  const { applyClientHMR } = require('i18next-hmr');    
+  const { applyClientHMR } = require('i18next-hmr/client');    
   applyClientHMR(i18next); 
 }
 ```
@@ -47,7 +47,7 @@ const express = require('express');
 const i18n = require('./i18n');
 
 if (process.env.NODE_ENV === 'development') {
-  const { applyServerHMR } = require('i18next-hmr');
+  const { applyServerHMR } = require('i18next-hmr/server');
   applyServerHMR(i18n);
 }
 
