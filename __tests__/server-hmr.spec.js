@@ -30,7 +30,11 @@ describe('server-hmr', () => {
   it('should reload resources on updated lang, ns', () => {
     const update = { lang: 'en', ns: 'name-space' };
     plugin.callbacks[0](update);
-    expect(i18nMock.reloadResources).toHaveBeenCalledWith([update.lang], [update.ns]);
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      [update.lang],
+      [update.ns],
+      expect.any(Function)
+    );
   });
 
   it('should notify on successful change', async () => {
