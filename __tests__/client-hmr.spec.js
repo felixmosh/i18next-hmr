@@ -21,9 +21,18 @@ function whenHotTriggeredWith(lang, ns) {
 
 describe('client-hmr', () => {
   let i18nMock;
+  let reloadError;
+
   beforeEach(() => {
+    reloadError = undefined;
+
     i18nMock = {
-      reloadResources: jest.fn(),
+      reloadResources: jest.fn().mockImplementation((_lang, _ns, callbackFn) => {
+        if (typeof callbackFn === 'function') {
+          callbackFn(reloadError);
+        }
+        return Promise.resolve();
+      }),
       changeLanguage: jest.fn(),
     };
 
@@ -75,7 +84,7 @@ describe('client-hmr', () => {
 
     await whenHotTriggeredWith('en', 'ns');
 
-    expect(i18nMock.reloadResources).toHaveBeenCalledWith(['en'], ['ns']);
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(['en'], ['ns'], expect.any(Function));
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
   });
 
@@ -89,5 +98,22 @@ describe('client-hmr', () => {
 
     expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
+  });
+
+  it('should notify that reload resource failed', async () => {
+    spyOn(global.console, 'error').and.callThrough();
+    i18nMock.options = { backend: {} };
+    i18nMock.language = 'en';
+    reloadError = 'reload failed';
+
+    applyClientHMR(i18nMock);
+    await whenHotTriggeredWith('en', 'ns');
+
+    expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
+    expect(global.console.error).toHaveBeenCalledWith(
+      expect.stringContaining(reloadError),
+      expect.any(String),
+      expect.any(String)
+    );
   });
 });
