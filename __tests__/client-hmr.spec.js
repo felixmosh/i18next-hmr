@@ -33,6 +33,11 @@ describe('client-hmr', () => {
         }
         return Promise.resolve();
       }),
+      services: {
+        languageUtils: {
+          getLanguagePartFromCode: code => code.split('-')[0],
+        },
+      },
       changeLanguage: jest.fn(),
     };
 
@@ -88,7 +93,7 @@ describe('client-hmr', () => {
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
   });
 
-  it('should not trigger reloads when current lang is not the one that was edited', async () => {
+  it('should not trigger changeLanguage when current lang is not the one that was edited', async () => {
     i18nMock.options = { backend: {} };
     i18nMock.language = 'en';
 
@@ -96,7 +101,11 @@ describe('client-hmr', () => {
 
     await whenHotTriggeredWith('otherLang', 'ns');
 
-    expect(i18nMock.reloadResources).not.toHaveBeenCalled();
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['otherLang'],
+      ['ns'],
+      expect.any(Function)
+    );
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
   });
 
