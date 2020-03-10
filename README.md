@@ -65,7 +65,20 @@ const port = process.env.PORT || 3000;
 Start the app with `NODE_ENV=development`
    
 ### Server side  
-The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed. 
+The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed.
+
+⚠️ If your server side is bundled using webpack, the lib will use the native HMR (if enabled), for it work properly the lib should be bundled, therefore, you should specify the lib as not [external](https://webpack.js.org/configuration/externals/). 
+There are 2 ways to do that:
+1. if you are using [webpack-node-externals](https://github.com/liady/webpack-node-externals) specify `i18next-hmr` in the [`whitelist`](https://github.com/liady/webpack-node-externals#optionswhitelist-).
+2. use a relative path to `node_modules`, something like: 
+   ```js
+    // server.entry.js
+    if (process.env.NODE_ENV === 'development') {
+      const { applyServerHMR } = require('../node_modules/i18next-hmr/server');
+      applyServerHMR(i18n);
+    }
+    ```
+
   
 ### Client side  
 The lib will invoke webpacks hmr to update client side, that will re-fetch (with cache killer) the updated translation json, and trigger [`i18n.changelanguage(lang)`](https://www.i18next.com/overview/api#changelanguage) to trigger listeners (in React app it will update the UI).  
