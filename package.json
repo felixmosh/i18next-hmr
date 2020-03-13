@@ -11,7 +11,8 @@
   "main": "client.js",
   "types": "types.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "keywords": [
     "i18next",
@@ -23,9 +24,10 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^24.0.23",
-    "@types/node": "^12.12.14",
-    "jest": "^24.9.0",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.1",
+    "auto-changelog": "^1.16.2",
+    "jest": "^25.1.0",
     "prettier": "^1.19.1"
   },
   "jest": {
