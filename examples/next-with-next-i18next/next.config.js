@@ -12,7 +12,7 @@ module.exports = {
     if (!options.isServer) {
       config.plugins.push(
         new I18NextHMRPlugin({
-          localesDir: path.resolve(__dirname, 'static/locales')
+          localesDir: path.resolve(__dirname, 'public/static/locales')
         })
       );
     }

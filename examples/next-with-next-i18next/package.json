@@ -12,14 +12,14 @@
     "start:prod": "NODE_ENV=production node index.js"
   },
   "devDependencies": {
-    "i18next-hmr": "^1.2.0"
+    "i18next-hmr": "^1.4.1"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "i18next": "^14.0.1",
-    "next": "^9.1.5",
-    "next-i18next": "^2.0.0",
-    "react": "^16.12.0",
-    "react-dom": "latest"
+    "i18next": "^19.3.3",
+    "next": "^9.3.0",
+    "next-i18next": "^4.2.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   }
 }
