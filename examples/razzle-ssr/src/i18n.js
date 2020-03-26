@@ -37,7 +37,7 @@ if (process && !process.release) {
 if (!i18n.isInitialized) {
   i18n.init(options);
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     const { applyClientHMR } = require('i18next-hmr/client');
     applyClientHMR(i18n);
   }

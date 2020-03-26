@@ -33,7 +33,7 @@ module.exports = {
 // i18next.config.js 
 const i18next = require('i18next'); 
 i18next.init(options, callback);    
-if (process.env.NODE_ENV === 'development') {    
+if (process.env.NODE_ENV !== 'production') {    
   const { applyClientHMR } = require('i18next-hmr/client');    
   applyClientHMR(i18next); 
 }
@@ -46,7 +46,7 @@ const express = require('express');
 
 const i18n = require('./i18n');
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   const { applyServerHMR } = require('i18next-hmr/server');
   applyServerHMR(i18n);
 }
@@ -73,7 +73,7 @@ There are 2 ways to do that:
 2. use a relative path to `node_modules`, something like: 
    ```js
     // server.entry.js
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       const { applyServerHMR } = require('../node_modules/i18next-hmr/server');
       applyServerHMR(i18n);
     }

@@ -22,7 +22,7 @@ i18n
     },
   });
 
-if(process.env.NODE_ENV === 'development') {
+if(process.env.NODE_ENV !== 'production') {
   const { applyClientHMR } = require('i18next-hmr');
   applyClientHMR(i18n);
 }

@@ -23,7 +23,7 @@ const i18nextMiddleware = require('i18next-express-middleware');
 
 const server = express();
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   const { applyServerHMR } = require('../node_modules/i18next-hmr/server'); // this relative import is to overcome webpack-node-externals
   applyServerHMR(i18n);
 }

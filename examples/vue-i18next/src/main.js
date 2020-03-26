@@ -13,7 +13,7 @@ i18next
     lng: 'en',
   });
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   const { applyClientHMR } = require('i18next-hmr');
   applyClientHMR(i18next);
 }

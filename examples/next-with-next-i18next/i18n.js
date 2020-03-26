@@ -22,7 +22,7 @@ const nextI18Next = new NextI18Next({
   localeSubpaths: localeSubpathVariations[localeSubpaths],
 });
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   const { applyClientHMR } = require('i18next-hmr');
   applyClientHMR(nextI18Next.i18n);
 }

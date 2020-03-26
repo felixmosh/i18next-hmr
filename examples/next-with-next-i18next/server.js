@@ -4,7 +4,7 @@ const nextI18NextMiddleware = require('next-i18next/middleware').default;
 
 const nextI18next = require('./i18n');
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   const { applyServerHMR } = require('i18next-hmr/server');
   applyServerHMR(nextI18next.i18n);
 }
