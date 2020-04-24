@@ -1,8 +1,7 @@
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  modify: (defaultConfig, { target, dev }) => {
+  modify: (defaultConfig, { dev }) => {
     if (dev) {
       const { I18NextHMRPlugin } = require('i18next-hmr/plugin');
       defaultConfig.plugins = [

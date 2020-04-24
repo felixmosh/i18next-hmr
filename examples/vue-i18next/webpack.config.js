@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: 'build.js',
   },
   module: {
     rules: [
@@ -15,37 +15,36 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {}
+          loaders: {},
           // other vue-loader options go here
-        }
+        },
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]?[hash]'
-        }
+          name: '[name].[ext]?[hash]',
+        },
       },
       {
         test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ]
-      }
-    ]
+        use: ['vue-style-loader', 'css-loader'],
+      },
+    ],
   },
-  plugins: [new VueLoaderPlugin(),
-    new I18NextHMRPlugin({ localesDir: path.resolve(__dirname, 'locales') })],
+  plugins: [
+    new VueLoaderPlugin(),
+    new I18NextHMRPlugin({ localesDir: path.resolve(__dirname, 'locales') }),
+  ],
   devServer: {
     historyApiFallback: true,
   },
   performance: {
-    hints: false
+    hints: false,
   },
 };
