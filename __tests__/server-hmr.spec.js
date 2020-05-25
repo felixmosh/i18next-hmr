@@ -6,9 +6,8 @@ jest.mock('../lib/trigger.js', () => {
 const applyServerHMR = require('../lib/server-hmr');
 const plugin = require('../lib/plugin');
 
-function whenNativeHMRTriggeredWith(lang, ns) {
-  changedData.lang = lang;
-  changedData.ns = ns;
+function whenNativeHMRTriggeredWith(changedFile) {
+  changedData.changedFile = changedFile;
 
   const acceptCallback = mockModule.hot.accept.mock.calls[0][1];
   return acceptCallback();
@@ -28,6 +27,7 @@ describe('server-hmr', () => {
         }
         return Promise.resolve();
       }),
+      options: { ns: ['name-space', 'nested/name-space'] }
     };
     jest.spyOn(plugin, 'addListener');
   });
@@ -52,7 +52,18 @@ describe('server-hmr', () => {
 
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
-      whenNativeHMRTriggeredWith(update.lang, update.ns);
+      whenNativeHMRTriggeredWith(`${update.lang}/${update.ns}`);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
+    it('should reload resources when nested namespace is updated', () => {
+      const update = { lang: 'en', ns: 'nested/name-space' };
+      whenNativeHMRTriggeredWith(`${update.lang}/${update.ns}`);
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
@@ -64,7 +75,7 @@ describe('server-hmr', () => {
     it('should notify on successful change', async () => {
       spyOn(global.console, 'log').and.callThrough();
 
-      whenNativeHMRTriggeredWith('en', 'name-space');
+      whenNativeHMRTriggeredWith('en/name-space');
 
       expect(global.console.log).toHaveBeenCalledWith(
         expect.stringContaining('Server reloaded locale')
@@ -76,7 +87,7 @@ describe('server-hmr', () => {
 
       spyOn(global.console, 'log').and.callThrough();
 
-      whenNativeHMRTriggeredWith('en', 'name-space');
+      whenNativeHMRTriggeredWith('en/name-space');
 
       expect(global.console.log).toHaveBeenCalledWith(expect.stringContaining(reloadError));
     });
@@ -94,7 +105,19 @@ describe('server-hmr', () => {
 
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
-      plugin.callbacks[0](update);
+      plugin.callbacks[0]({ changedFile: `${update.lang}/${update.ns}` });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
+    it('should reload resources when nested namespace is updated', () => {
+      const update = { lang: 'en', ns: 'nested/name-space' };
+      plugin.callbacks[0]({ changedFile: `${update.lang}/${update.ns}` });
+
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
         [update.ns],
@@ -105,7 +128,7 @@ describe('server-hmr', () => {
     it('should notify on successful change', async () => {
       spyOn(global.console, 'log').and.callThrough();
 
-      await plugin.callbacks[0]({ lang: 'en', ns: 'ns' });
+      await plugin.callbacks[0]({ changedFile: 'en/name-space' });
 
       expect(global.console.log).toHaveBeenCalledWith(
         expect.stringContaining('Server reloaded locale')
@@ -117,7 +140,7 @@ describe('server-hmr', () => {
 
       spyOn(global.console, 'log').and.callThrough();
 
-      await plugin.callbacks[0]({ lang: 'en', ns: 'ns' });
+      await plugin.callbacks[0]({ changedFile: 'en/name-space' });
 
       expect(global.console.log).toHaveBeenCalledWith(expect.stringContaining(reloadError));
     });

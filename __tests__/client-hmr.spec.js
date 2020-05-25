@@ -11,9 +11,8 @@ global.mockModule = {
 
 const applyClientHMR = require('../lib/client-hmr');
 
-function whenHotTriggeredWith(lang, ns) {
-  changedData.lang = lang;
-  changedData.ns = ns;
+function whenHotTriggeredWith(changedFile) {
+  changedData.changedFile = changedFile;
 
   const acceptCallback = mockModule.hot.accept.mock.calls[0][1];
   return acceptCallback();
@@ -54,27 +53,28 @@ describe('client-hmr', () => {
     );
   });
 
-  it('should it should use backend options from global options as cache killer param', () => {
-    i18nMock.options = { backend: {} };
+  it('should use backend options from global options as cache killer param', () => {
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
 
     applyClientHMR(i18nMock);
 
-    whenHotTriggeredWith('en', 'ns');
+    whenHotTriggeredWith('en/name-space');
 
     expect(i18nMock.options.backend).toHaveProperty('queryStringParams', { _: expect.any(Number) });
   });
 
-  it('should it should use backend options from services as cache killer param', () => {
+  it('should use backend options from services as cache killer param', () => {
     i18nMock.services = {
+      ...i18nMock.services,
       backendConnector: { backend: { options: {} } },
     };
     i18nMock.language = 'en';
-    i18nMock.options = {};
+    i18nMock.options = { ns: ['name-space'] };
 
     applyClientHMR(i18nMock);
 
-    whenHotTriggeredWith('en', 'ns');
+    whenHotTriggeredWith('en/name-space');
 
     expect(i18nMock.services.backendConnector.backend.options).toHaveProperty('queryStringParams', {
       _: expect.any(Number),
@@ -82,28 +82,48 @@ describe('client-hmr', () => {
   });
 
   it('should trigger reload when translation file changed', async () => {
-    i18nMock.options = { backend: {} };
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('en', 'ns');
+    await whenHotTriggeredWith('en/name-space');
 
-    expect(i18nMock.reloadResources).toHaveBeenCalledWith(['en'], ['ns'], expect.any(Function));
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en'],
+      ['name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
+  });
+
+  it('should trigger reload when translation file changed with nested namespace', async () => {
+    i18nMock.options = { backend: {}, ns: ['name-space', 'nested/name-space'] };
+    i18nMock.language = 'en';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith('en/nested/name-space');
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en'],
+      ['nested/name-space'],
+      expect.any(Function)
+    );
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
   });
 
   it('should not trigger changeLanguage when current lang is not the one that was edited', async () => {
-    i18nMock.options = { backend: {} };
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('otherLang', 'ns');
+    await whenHotTriggeredWith('otherLang/name-space');
 
     expect(i18nMock.reloadResources).toHaveBeenCalledWith(
       ['otherLang'],
-      ['ns'],
+      ['name-space'],
       expect.any(Function)
     );
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
@@ -111,12 +131,12 @@ describe('client-hmr', () => {
 
   it('should notify that reload resource failed', async () => {
     spyOn(global.console, 'error').and.callThrough();
-    i18nMock.options = { backend: {} };
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
     reloadError = 'reload failed';
 
     applyClientHMR(i18nMock);
-    await whenHotTriggeredWith('en', 'ns');
+    await whenHotTriggeredWith('en/name-space');
 
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
     expect(global.console.error).toHaveBeenCalledWith(
