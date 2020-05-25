@@ -2,3 +2,4 @@ examples
 .idea
 __tests__
 .circleci
+prettier.config.js
