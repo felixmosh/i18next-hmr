@@ -32,6 +32,10 @@ describe('server-hmr', () => {
     jest.spyOn(plugin, 'addListener');
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  })
+
   describe('with native HMR', () => {
     beforeEach(() => {
       global.mockModule = {
@@ -70,6 +74,19 @@ describe('server-hmr', () => {
         [update.ns],
         expect.any(Function)
       );
+    });
+
+    it('should ignore changes of none loaded namespace', async () => {
+      spyOn(global.console, 'log').and.callThrough();
+      i18nMock.options = { backend: {}, ns: ['name-space'] };
+      i18nMock.language = 'en';
+
+      await whenNativeHMRTriggeredWith('en/none-loaded-ns');
+
+      expect(global.console.log).not.toHaveBeenCalledWith(
+        expect.stringContaining('Got an update with'),
+      );
+      expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     });
 
     it('should notify on successful change', async () => {
@@ -123,6 +140,19 @@ describe('server-hmr', () => {
         [update.ns],
         expect.any(Function)
       );
+    });
+
+    it('should ignore changes of none loaded namespace', async () => {
+      spyOn(global.console, 'log').and.callThrough();
+      i18nMock.options = { backend: {}, ns: ['name-space'] };
+      i18nMock.language = 'en';
+
+      plugin.callbacks[0]({ changedFile: 'en/none-loaded-ns' });
+
+      expect(global.console.log).not.toHaveBeenCalledWith(
+        expect.stringContaining('Got an update with'),
+      );
+      expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     });
 
     it('should notify on successful change', async () => {

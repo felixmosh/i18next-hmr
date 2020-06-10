@@ -43,6 +43,10 @@ describe('client-hmr', () => {
     mockModule.hot.accept.mockReset();
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should warn regarding missing backend options', () => {
     spyOn(global.console, 'warn').and.callThrough();
     applyClientHMR(i18nMock);
@@ -144,5 +148,23 @@ describe('client-hmr', () => {
       expect.any(String),
       expect.any(String)
     );
+  });
+
+  it('should ignore changes of none loaded namespace', async () => {
+    spyOn(global.console, 'log').and.callThrough();
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
+    i18nMock.language = 'en';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith('en/none-loaded-ns');
+
+    expect(global.console.log).not.toHaveBeenCalledWith(
+      expect.stringContaining('Got an update with'),
+      expect.any(String),
+      expect.any(String)
+    );
+    expect(i18nMock.reloadResources).not.toHaveBeenCalled();
+    expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
   });
 });
