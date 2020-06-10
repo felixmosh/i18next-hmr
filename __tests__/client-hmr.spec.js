@@ -53,7 +53,6 @@ describe('client-hmr', () => {
     expect(global.console.warn).toHaveBeenCalledWith(
       expect.stringContaining('i18next-backend not found'),
       expect.any(String),
-      expect.any(String)
     );
   });
 
@@ -146,7 +145,6 @@ describe('client-hmr', () => {
     expect(global.console.error).toHaveBeenCalledWith(
       expect.stringContaining(reloadError),
       expect.any(String),
-      expect.any(String)
     );
   });
 
@@ -161,8 +159,24 @@ describe('client-hmr', () => {
 
     expect(global.console.log).not.toHaveBeenCalledWith(
       expect.stringContaining('Got an update with'),
-      expect.any(String),
       expect.any(String)
+    );
+    expect(i18nMock.reloadResources).not.toHaveBeenCalled();
+    expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
+  });
+
+  it('should distinguish containing namespaces names', async () => {
+    spyOn(global.console, 'log').and.callThrough();
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
+    i18nMock.language = 'en';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith('en/none-loaded-name-space');
+
+    expect(global.console.log).not.toHaveBeenCalledWith(
+      expect.stringContaining('Got an update with'),
+      expect.any(String),
     );
     expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();

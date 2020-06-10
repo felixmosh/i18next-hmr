@@ -89,6 +89,19 @@ describe('server-hmr', () => {
       expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     });
 
+    it('should distinguish containing namespaces names', async () => {
+      spyOn(global.console, 'log').and.callThrough();
+      i18nMock.options = { backend: {}, ns: ['name-space'] };
+      i18nMock.language = 'en';
+
+      await whenNativeHMRTriggeredWith('en/none-loaded-name-space');
+
+      expect(global.console.log).not.toHaveBeenCalledWith(
+        expect.stringContaining('Got an update with'),
+      );
+      expect(i18nMock.reloadResources).not.toHaveBeenCalled();
+    });
+
     it('should notify on successful change', async () => {
       spyOn(global.console, 'log').and.callThrough();
 
