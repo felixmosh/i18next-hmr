@@ -53,6 +53,7 @@ describe('client-hmr', () => {
     expect(global.console.warn).toHaveBeenCalledWith(
       expect.stringContaining('i18next-backend not found'),
       expect.any(String),
+      expect.any(String),
     );
   });
 
@@ -144,6 +145,7 @@ describe('client-hmr', () => {
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
     expect(global.console.error).toHaveBeenCalledWith(
       expect.stringContaining(reloadError),
+      expect.any(String),
       expect.any(String),
     );
   });
