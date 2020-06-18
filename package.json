@@ -9,7 +9,7 @@
     "url": "https://github.com/felixmosh/i18next-hmr"
   },
   "main": "client.js",
-  "types": "types.d.ts",
+  "types": "client.d.ts",
   "scripts": {
     "test": "jest",
     "version": "auto-changelog -p && git add CHANGELOG.md"
