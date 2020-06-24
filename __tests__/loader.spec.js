@@ -30,7 +30,7 @@ describe('loader', () => {
 
   it('should invalidate content hash', async () => {
     const firstCall = loader.apply(context, [content]);
-    await new Promise(resolve => setTimeout(() => resolve(), 10));
+    await new Promise((resolve) => setTimeout(() => resolve(), 10));
     const secondCall = loader.apply(context, [content]);
     expect(firstCall).not.toEqual(secondCall);
   });
