@@ -34,7 +34,7 @@ describe('client-hmr', () => {
       }),
       services: {
         languageUtils: {
-          getLanguagePartFromCode: code => code.split('-')[0],
+          getLanguagePartFromCode: (code) => code.split('-')[0],
         },
       },
       changeLanguage: jest.fn(),
@@ -53,7 +53,7 @@ describe('client-hmr', () => {
     expect(global.console.warn).toHaveBeenCalledWith(
       expect.stringContaining('i18next-backend not found'),
       expect.any(String),
-      expect.any(String),
+      expect.any(String)
     );
   });
 
@@ -117,6 +117,22 @@ describe('client-hmr', () => {
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
   });
 
+  it('should trigger reload when translation file with backslashes (windows)', async () => {
+    i18nMock.options = { backend: {}, ns: ['name-space', 'nested/name-space'] };
+    i18nMock.language = 'en';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith('en\\nested\\name-space');
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en'],
+      ['nested/name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
+  });
+
   it('should not trigger changeLanguage when current lang is not the one that was edited', async () => {
     i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
@@ -146,7 +162,7 @@ describe('client-hmr', () => {
     expect(global.console.error).toHaveBeenCalledWith(
       expect.stringContaining(reloadError),
       expect.any(String),
-      expect.any(String),
+      expect.any(String)
     );
   });
 
@@ -178,7 +194,7 @@ describe('client-hmr', () => {
 
     expect(global.console.log).not.toHaveBeenCalledWith(
       expect.stringContaining('Got an update with'),
-      expect.any(String),
+      expect.any(String)
     );
     expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();

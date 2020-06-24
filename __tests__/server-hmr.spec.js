@@ -27,14 +27,14 @@ describe('server-hmr', () => {
         }
         return Promise.resolve();
       }),
-      options: { ns: ['name-space', 'nested/name-space'] }
+      options: { ns: ['name-space', 'nested/name-space'] },
     };
     jest.spyOn(plugin, 'addListener');
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
-  })
+  });
 
   describe('with native HMR', () => {
     beforeEach(() => {
@@ -76,6 +76,17 @@ describe('server-hmr', () => {
       );
     });
 
+    it('should reload resources when changed file based on back slashes (windows)', () => {
+      const update = { lang: 'en', ns: 'nested/name-space' };
+      whenNativeHMRTriggeredWith(`${update.lang}\\${update.ns.replace('/', '\\')}`);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
     it('should ignore changes of none loaded namespace', async () => {
       spyOn(global.console, 'log').and.callThrough();
       i18nMock.options = { backend: {}, ns: ['name-space'] };
@@ -84,7 +95,7 @@ describe('server-hmr', () => {
       await whenNativeHMRTriggeredWith('en/none-loaded-ns');
 
       expect(global.console.log).not.toHaveBeenCalledWith(
-        expect.stringContaining('Got an update with'),
+        expect.stringContaining('Got an update with')
       );
       expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     });
@@ -97,7 +108,7 @@ describe('server-hmr', () => {
       await whenNativeHMRTriggeredWith('en/none-loaded-name-space');
 
       expect(global.console.log).not.toHaveBeenCalledWith(
-        expect.stringContaining('Got an update with'),
+        expect.stringContaining('Got an update with')
       );
       expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     });
@@ -155,6 +166,17 @@ describe('server-hmr', () => {
       );
     });
 
+    it('should reload resources when changed file based on back slashes (windows)', () => {
+      const update = { lang: 'en', ns: 'nested/name-space' };
+      plugin.callbacks[0]({ changedFile: `${update.lang}\\${update.ns.replace('/', '\\')}` });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
     it('should ignore changes of none loaded namespace', async () => {
       spyOn(global.console, 'log').and.callThrough();
       i18nMock.options = { backend: {}, ns: ['name-space'] };
@@ -163,7 +185,7 @@ describe('server-hmr', () => {
       plugin.callbacks[0]({ changedFile: 'en/none-loaded-ns' });
 
       expect(global.console.log).not.toHaveBeenCalledWith(
-        expect.stringContaining('Got an update with'),
+        expect.stringContaining('Got an update with')
       );
       expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     });
