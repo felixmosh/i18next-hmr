@@ -5,20 +5,20 @@
   "dependencies": {
     "@babel/core": "7.6.0",
     "@svgr/webpack": "4.3.2",
-    "@typescript-eslint/eslint-plugin": "^2.11.0",
-    "@typescript-eslint/parser": "^2.11.0",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "babel-eslint": "10.0.3",
-    "babel-jest": "^24.9.0",
+    "babel-jest": "^26.1.0",
     "babel-loader": "8.0.6",
-    "babel-plugin-named-asset-import": "^0.3.4",
-    "babel-preset-react-app": "^9.0.2",
+    "babel-plugin-named-asset-import": "^0.3.6",
+    "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "5.1.0",
-    "eslint": "^6.1.0",
-    "eslint-config-react-app": "^5.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.2.1",
     "eslint-loader": "3.0.2",
     "eslint-plugin-flowtype": "3.13.0",
     "eslint-plugin-import": "2.18.2",
@@ -33,7 +33,7 @@
     "i18next-xhr-backend": "3.2.0",
     "identity-obj-proxy": "3.0.0",
     "is-wsl": "^1.1.0",
-    "jest": "24.9.0",
+    "jest": "^26.1.0",
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
@@ -46,7 +46,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
     "react": "16.11.0",
-    "react-app-polyfill": "^1.0.4",
+    "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^9.1.0",
     "react-dom": "16.11.0",
     "react-i18next": "11.0.0",
@@ -55,11 +55,11 @@
     "sass-loader": "7.2.0",
     "semver": "6.3.0",
     "style-loader": "1.0.0",
-    "terser-webpack-plugin": "^2.3.0",
+    "terser-webpack-plugin": "^2.3.7",
     "ts-pnp": "1.1.4",
     "url-loader": "2.1.0",
     "webpack": "4.41.0",
-    "webpack-dev-server": "3.2.1",
+    "webpack-dev-server": "^3.11.0",
     "webpack-manifest-plugin": "2.1.1",
     "workbox-webpack-plugin": "4.3.1"
   },
@@ -138,6 +138,6 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "i18next-hmr": "^1.2.0"
+    "i18next-hmr": "^1.5.5"
   }
 }

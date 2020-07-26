@@ -9,23 +9,23 @@
   },
   "dependencies": {
     "@panter/vue-i18next": "^0.15.2",
-    "i18next": "^19.3.3",
+    "i18next": "^19.6.3",
     "i18next-xhr-backend": "^3.2.2",
     "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
-    "css-loader": "^3.4.2",
+    "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
-    "i18next-hmr": "^1.4.1",
-    "vue-loader": "^15.9.1",
+    "i18next-hmr": "^1.5.5",
+    "vue-loader": "^15.9.3",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }
