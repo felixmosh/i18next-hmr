@@ -12,7 +12,8 @@
   "types": "client.d.ts",
   "scripts": {
     "test": "jest",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "version": "auto-changelog -p && git add CHANGELOG.md",
+    "release": "release-it"
   },
   "keywords": [
     "i18next",
@@ -28,7 +29,8 @@
     "@types/node": "^13.9.2",
     "auto-changelog": "^2.0.0",
     "jest": "^26.0.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "release-it": "^13.6.6"
   },
   "jest": {
     "testMatch": [
@@ -42,5 +44,16 @@
       "/dist/"
     ],
     "testEnvironment": "node"
+  },
+  "release-it": {
+    "git": {
+      "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
+    },
+    "hooks": {
+      "after:bump": "npx auto-changelog -p"
+    },
+    "github": {
+      "release": true
+    }
   }
 }
