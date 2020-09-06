@@ -6,8 +6,8 @@ jest.mock('../lib/trigger.js', () => {
 const applyServerHMR = require('../lib/server-hmr');
 const plugin = require('../lib/plugin');
 
-function whenNativeHMRTriggeredWith(changedFile) {
-  changedData.changedFile = changedFile;
+function whenNativeHMRTriggeredWith(changedFiles) {
+  changedData.changedFiles = changedFiles;
 
   const acceptCallback = mockModule.hot.accept.mock.calls[0][1];
   return acceptCallback();
@@ -56,7 +56,7 @@ describe('server-hmr', () => {
 
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
-      whenNativeHMRTriggeredWith(`${update.lang}/${update.ns}`);
+      whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
@@ -67,7 +67,7 @@ describe('server-hmr', () => {
 
     it('should reload resources when nested namespace is updated', () => {
       const update = { lang: 'en', ns: 'nested/name-space' };
-      whenNativeHMRTriggeredWith(`${update.lang}/${update.ns}`);
+      whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
@@ -78,7 +78,7 @@ describe('server-hmr', () => {
 
     it('should reload resources when changed file based on back slashes (windows)', () => {
       const update = { lang: 'en', ns: 'nested/name-space' };
-      whenNativeHMRTriggeredWith(`${update.lang}\\${update.ns.replace('/', '\\')}`);
+      whenNativeHMRTriggeredWith([`${update.lang}\\${update.ns.replace('/', '\\')}`]);
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
@@ -92,7 +92,7 @@ describe('server-hmr', () => {
       i18nMock.options = { backend: {}, ns: ['name-space'] };
       i18nMock.language = 'en';
 
-      await whenNativeHMRTriggeredWith('en/none-loaded-ns');
+      await whenNativeHMRTriggeredWith(['en/none-loaded-ns']);
 
       expect(global.console.log).not.toHaveBeenCalledWith(
         expect.stringContaining('Got an update with')
@@ -105,7 +105,7 @@ describe('server-hmr', () => {
       i18nMock.options = { backend: {}, ns: ['name-space'] };
       i18nMock.language = 'en';
 
-      await whenNativeHMRTriggeredWith('en/none-loaded-name-space');
+      await whenNativeHMRTriggeredWith(['en/none-loaded-name-space']);
 
       expect(global.console.log).not.toHaveBeenCalledWith(
         expect.stringContaining('Got an update with')
@@ -116,7 +116,7 @@ describe('server-hmr', () => {
     it('should notify on successful change', async () => {
       spyOn(global.console, 'log').and.callThrough();
 
-      whenNativeHMRTriggeredWith('en/name-space');
+      whenNativeHMRTriggeredWith(['en/name-space']);
 
       expect(global.console.log).toHaveBeenCalledWith(
         expect.stringContaining('Server reloaded locale')
@@ -128,9 +128,19 @@ describe('server-hmr', () => {
 
       spyOn(global.console, 'log').and.callThrough();
 
-      whenNativeHMRTriggeredWith('en/name-space');
+      whenNativeHMRTriggeredWith(['en/name-space']);
 
       expect(global.console.log).toHaveBeenCalledWith(expect.stringContaining(reloadError));
+    });
+
+    it('should support change of multiple files', () => {
+      whenNativeHMRTriggeredWith([`en/name-space`, 'de/name-space']);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en', 'de'],
+        ['name-space'],
+        expect.any(Function)
+      );
     });
   });
 
@@ -146,7 +156,7 @@ describe('server-hmr', () => {
 
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
-      plugin.callbacks[0]({ changedFile: `${update.lang}/${update.ns}` });
+      plugin.callbacks[0]({ changedFiles: [`${update.lang}/${update.ns}`] });
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
@@ -157,7 +167,7 @@ describe('server-hmr', () => {
 
     it('should reload resources when nested namespace is updated', () => {
       const update = { lang: 'en', ns: 'nested/name-space' };
-      plugin.callbacks[0]({ changedFile: `${update.lang}/${update.ns}` });
+      plugin.callbacks[0]({ changedFiles: [`${update.lang}/${update.ns}`] });
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
@@ -168,7 +178,7 @@ describe('server-hmr', () => {
 
     it('should reload resources when changed file based on back slashes (windows)', () => {
       const update = { lang: 'en', ns: 'nested/name-space' };
-      plugin.callbacks[0]({ changedFile: `${update.lang}\\${update.ns.replace('/', '\\')}` });
+      plugin.callbacks[0]({ changedFiles: [`${update.lang}\\${update.ns.replace('/', '\\')}`] });
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
@@ -182,7 +192,7 @@ describe('server-hmr', () => {
       i18nMock.options = { backend: {}, ns: ['name-space'] };
       i18nMock.language = 'en';
 
-      plugin.callbacks[0]({ changedFile: 'en/none-loaded-ns' });
+      plugin.callbacks[0]({ changedFiles: ['en/none-loaded-ns'] });
 
       expect(global.console.log).not.toHaveBeenCalledWith(
         expect.stringContaining('Got an update with')
@@ -193,7 +203,7 @@ describe('server-hmr', () => {
     it('should notify on successful change', async () => {
       spyOn(global.console, 'log').and.callThrough();
 
-      await plugin.callbacks[0]({ changedFile: 'en/name-space' });
+      await plugin.callbacks[0]({ changedFiles: ['en/name-space'] });
 
       expect(global.console.log).toHaveBeenCalledWith(
         expect.stringContaining('Server reloaded locale')
@@ -205,9 +215,19 @@ describe('server-hmr', () => {
 
       spyOn(global.console, 'log').and.callThrough();
 
-      await plugin.callbacks[0]({ changedFile: 'en/name-space' });
+      await plugin.callbacks[0]({ changedFiles: ['en/name-space'] });
 
       expect(global.console.log).toHaveBeenCalledWith(expect.stringContaining(reloadError));
+    });
+
+    it('should support change of multiple files', () => {
+      plugin.callbacks[0]({ changedFiles: [`en/name-space`, 'de/name-space'] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en', 'de'],
+        ['name-space'],
+        expect.any(Function)
+      );
     });
   });
 });

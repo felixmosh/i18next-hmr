@@ -11,8 +11,8 @@ global.mockModule = {
 
 const applyClientHMR = require('../lib/client-hmr');
 
-function whenHotTriggeredWith(changedFile) {
-  changedData.changedFile = changedFile;
+function whenHotTriggeredWith(changedFiles) {
+  changedData.changedFiles = changedFiles;
 
   const acceptCallback = mockModule.hot.accept.mock.calls[0][1];
   return acceptCallback();
@@ -63,7 +63,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    whenHotTriggeredWith('en/name-space');
+    whenHotTriggeredWith(['en/name-space']);
 
     expect(i18nMock.options.backend).toHaveProperty('queryStringParams', { _: expect.any(Number) });
   });
@@ -78,7 +78,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    whenHotTriggeredWith('en/name-space');
+    whenHotTriggeredWith(['en/name-space']);
 
     expect(i18nMock.services.backendConnector.backend.options).toHaveProperty('queryStringParams', {
       _: expect.any(Number),
@@ -91,7 +91,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('en/name-space');
+    await whenHotTriggeredWith(['en/name-space']);
 
     expect(i18nMock.reloadResources).toHaveBeenCalledWith(
       ['en'],
@@ -107,7 +107,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('en/nested/name-space');
+    await whenHotTriggeredWith(['en/nested/name-space']);
 
     expect(i18nMock.reloadResources).toHaveBeenCalledWith(
       ['en'],
@@ -123,7 +123,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('en\\nested\\name-space');
+    await whenHotTriggeredWith(['en\\nested\\name-space']);
 
     expect(i18nMock.reloadResources).toHaveBeenCalledWith(
       ['en'],
@@ -139,7 +139,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('otherLang/name-space');
+    await whenHotTriggeredWith(['otherLang/name-space']);
 
     expect(i18nMock.reloadResources).toHaveBeenCalledWith(
       ['otherLang'],
@@ -156,7 +156,7 @@ describe('client-hmr', () => {
     reloadError = 'reload failed';
 
     applyClientHMR(i18nMock);
-    await whenHotTriggeredWith('en/name-space');
+    await whenHotTriggeredWith(['en/name-space']);
 
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
     expect(global.console.error).toHaveBeenCalledWith(
@@ -173,7 +173,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('en/none-loaded-ns');
+    await whenHotTriggeredWith(['en/none-loaded-ns']);
 
     expect(global.console.log).not.toHaveBeenCalledWith(
       expect.stringContaining('Got an update with'),
@@ -190,7 +190,7 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith('en/none-loaded-name-space');
+    await whenHotTriggeredWith(['en/none-loaded-name-space']);
 
     expect(global.console.log).not.toHaveBeenCalledWith(
       expect.stringContaining('Got an update with'),
@@ -198,5 +198,34 @@ describe('client-hmr', () => {
     );
     expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
+  });
+
+  describe('multiple files', () => {
+    it('should support change of multiple files', async () => {
+      i18nMock.options = { backend: {}, ns: ['name-space', 'name-space2'] };
+      i18nMock.language = 'en';
+
+      applyClientHMR(i18nMock);
+
+      await whenHotTriggeredWith(['en/name-space', 'en/name-space2', 'de/name-space']);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en', 'de'],
+        ['name-space', 'name-space2'],
+        expect.any(Function)
+      );
+      expect(i18nMock.changeLanguage).toHaveBeenCalled();
+    });
+
+    it('should not trigger `changeLanguage` when modified files are not related to the current language', async () => {
+      i18nMock.options = { backend: {}, ns: ['name-space', 'name-space2'] };
+      i18nMock.language = 'en';
+
+      applyClientHMR(i18nMock);
+
+      await whenHotTriggeredWith(['de/name-space', 'de/name-space2']);
+
+      expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
+    });
   });
 });
