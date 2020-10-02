@@ -32,11 +32,6 @@ describe('client-hmr', () => {
         }
         return Promise.resolve();
       }),
-      services: {
-        languageUtils: {
-          getLanguagePartFromCode: (code) => code.split('-')[0],
-        },
-      },
       changeLanguage: jest.fn(),
     };
 
@@ -99,6 +94,22 @@ describe('client-hmr', () => {
       expect.any(Function)
     );
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
+  });
+
+  it('should trigger reload when lng-country combination file changed', async () => {
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
+    i18nMock.language = 'en-US';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith(['en-US/name-space']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en-US'],
+      ['name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en-US');
   });
 
   it('should trigger reload when translation file changed with nested namespace', async () => {
