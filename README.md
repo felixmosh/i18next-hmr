@@ -8,7 +8,7 @@ I18Next HMR🔥 webpack plugin that allows reloading translation resources on th
 ## Requirements
 
 - Node.js v8 or above
-- Webpack 4.x  
+- Webpack 4.x - 5.x
 
 
 ## Installation
