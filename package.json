@@ -1,6 +1,6 @@
 {
   "name": "i18next-hmr",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "description": "I18Next HMR webpack plugin that allows reloading translation resources on the client & the server.",
   "homepage": "https://github.com/felixmosh/i18next-hmr",
   "bugs": "https://github.com/felixmosh/i18next-hmr/issues",
