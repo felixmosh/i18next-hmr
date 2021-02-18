@@ -1,13 +1,13 @@
 # i18next-hmr
 
 [![npm](https://img.shields.io/npm/v/i18next-hmr.svg)](https://www.npmjs.com/package/i18next-hmr)
-[![CircleCI](https://circleci.com/gh/felixmosh/i18next-hmr.svg?style=svg)](https://circleci.com/gh/felixmosh/i18next-hmr)
+![CI](https://github.com/felixmosh/i18next-hmr/workflows/CI/badge.svg)
 
 I18Next HMR🔥 webpack plugin that allows reloading translation resources on the client &amp; the server
 
 ## Requirements
 
-- Node.js v8 or above
+- Node.js v10 or above
 - Webpack 4.x - 5.x
 
 
@@ -79,7 +79,7 @@ Start the app with `NODE_ENV=development`
 
 The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed.
 
-⚠️ If your server side is bundled using webpack, the lib will use the native HMR (if enabled), for it work properly the lib should be bundled, therefore, you should specify the lib as not [external](https://webpack.js.org/configuration/externals/).
+⚠️ If your server side is bundled using Webpack, the lib will use the native HMR (if enabled), for it work properly the lib must be **bundled**, therefore, you should specify the lib as not [external](https://webpack.js.org/configuration/externals/).
 There are 2 ways to do that:
 
 1. if you are using [webpack-node-externals](https://github.com/liady/webpack-node-externals) specify `i18next-hmr` in the [`whitelist`](https://github.com/liady/webpack-node-externals#optionswhitelist-).
@@ -94,7 +94,7 @@ There are 2 ways to do that:
 
 ### Client side
 
-The lib will invoke webpacks HMR to update client side, that will re-fetch (with cache killer) the updated translation json, and trigger [`i18n.changelanguage(lang)`](https://www.i18next.com/overview/api#changelanguage) to trigger listeners (in React app it will update the UI).
+The lib will invoke Webpack's HMR to update client side, that will re-fetch (with cache killer) the updated translation files and trigger [`i18n.changelanguage(lang)`](https://www.i18next.com/overview/api#changelanguage) to trigger listeners (which in React apps it will update the UI).
 
 ## Example
 
