@@ -2,12 +2,20 @@
   "name": "i18next-hmr",
   "version": "1.7.1",
   "description": "I18Next HMR webpack plugin that allows reloading translation resources on the client & the server.",
+  "keywords": [
+    "i18next",
+    "HMR",
+    "webpack",
+    "plugin"
+  ],
   "homepage": "https://github.com/felixmosh/i18next-hmr",
   "bugs": "https://github.com/felixmosh/i18next-hmr/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/felixmosh/i18next-hmr"
   },
+  "license": "MIT",
+  "author": "felixmosh",
   "main": "client.js",
   "types": "client.d.ts",
   "scripts": {
@@ -15,14 +23,19 @@
     "version": "auto-changelog -p && git add CHANGELOG.md",
     "release": "release-it"
   },
-  "keywords": [
-    "i18next",
-    "HMR",
-    "webpack",
-    "plugin"
-  ],
-  "author": "felixmosh",
-  "license": "MIT",
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.spec.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "transform": {
+      "(client|server)-hmr\\.js": "<rootDir>/__tests__/utils/preprocessor.js"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^25.2.3",
     "@types/node": "^13.13.38",
@@ -31,24 +44,12 @@
     "prettier": "^2.2.1",
     "release-it": "^13.7.1"
   },
-  "jest": {
-    "testMatch": [
-      "**/__tests__/**/*.spec.js"
-    ],
-    "transform": {
-      "(client|server)-hmr\\.js": "<rootDir>/__tests__/utils/preprocessor.js"
-    },
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
-    ],
-    "testEnvironment": "node"
-  },
   "release-it": {
     "git": {
       "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
     },
     "hooks": {
+      "before:init": "yarn test",
       "after:bump": "npx auto-changelog -p"
     },
     "github": {
