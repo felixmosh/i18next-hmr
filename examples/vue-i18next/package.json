@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@panter/vue-i18next": "^0.15.2",
-    "i18next": "^19.6.3",
+    "i18next": "^20.3.1",
     "i18next-xhr-backend": "^3.2.2",
     "vue": "^2.6.11"
   },
@@ -18,7 +18,7 @@
     "@babel/preset-env": "^7.10.4",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
-    "css-loader": "^3.6.0",
+    "css-loader": "^5.2.6",
     "file-loader": "^6.0.0",
     "i18next-hmr": "^1.5.5",
     "vue-loader": "^15.9.3",
