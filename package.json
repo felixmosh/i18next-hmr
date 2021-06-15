@@ -21,7 +21,7 @@
   "scripts": {
     "test": "jest",
     "version": "auto-changelog -p && git add CHANGELOG.md",
-    "release": "release-it"
+    "release": "release-it --version-only"
   },
   "jest": {
     "testEnvironment": "node",
