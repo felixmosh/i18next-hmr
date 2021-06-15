@@ -43,7 +43,7 @@ describe('client-hmr', () => {
   });
 
   it('should warn regarding missing backend options', () => {
-    spyOn(global.console, 'warn').and.callThrough();
+    jest.spyOn(global.console, 'warn');
     applyClientHMR(i18nMock);
     expect(global.console.warn).toHaveBeenCalledWith(
       expect.stringContaining('i18next-backend not found'),
@@ -161,7 +161,7 @@ describe('client-hmr', () => {
   });
 
   it('should notify that reload resource failed', async () => {
-    spyOn(global.console, 'error').and.callThrough();
+    jest.spyOn(global.console, 'error');
     i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
     reloadError = 'reload failed';
@@ -178,7 +178,7 @@ describe('client-hmr', () => {
   });
 
   it('should ignore changes of none loaded namespace', async () => {
-    spyOn(global.console, 'log').and.callThrough();
+    jest.spyOn(global.console, 'log');
     i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
 
@@ -195,7 +195,7 @@ describe('client-hmr', () => {
   });
 
   it('should distinguish containing namespaces names', async () => {
-    spyOn(global.console, 'log').and.callThrough();
+    jest.spyOn(global.console, 'log');
     i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
 

@@ -88,7 +88,7 @@ describe('server-hmr', () => {
     });
 
     it('should ignore changes of none loaded namespace', async () => {
-      spyOn(global.console, 'log').and.callThrough();
+      jest.spyOn(global.console, 'log');
       i18nMock.options = { backend: {}, ns: ['name-space'] };
       i18nMock.language = 'en';
 
@@ -101,7 +101,7 @@ describe('server-hmr', () => {
     });
 
     it('should distinguish containing namespaces names', async () => {
-      spyOn(global.console, 'log').and.callThrough();
+      jest.spyOn(global.console, 'log');
       i18nMock.options = { backend: {}, ns: ['name-space'] };
       i18nMock.language = 'en';
 
@@ -114,7 +114,7 @@ describe('server-hmr', () => {
     });
 
     it('should notify on successful change', async () => {
-      spyOn(global.console, 'log').and.callThrough();
+      jest.spyOn(global.console, 'log');
 
       whenNativeHMRTriggeredWith(['en/name-space']);
 
@@ -126,7 +126,7 @@ describe('server-hmr', () => {
     it('should notify when reload fails', async () => {
       reloadError = 'reload failed';
 
-      spyOn(global.console, 'log').and.callThrough();
+      jest.spyOn(global.console, 'log');
 
       whenNativeHMRTriggeredWith(['en/name-space']);
 
@@ -188,7 +188,7 @@ describe('server-hmr', () => {
     });
 
     it('should ignore changes of none loaded namespace', async () => {
-      spyOn(global.console, 'log').and.callThrough();
+      jest.spyOn(global.console, 'log');
       i18nMock.options = { backend: {}, ns: ['name-space'] };
       i18nMock.language = 'en';
 
@@ -201,7 +201,7 @@ describe('server-hmr', () => {
     });
 
     it('should notify on successful change', async () => {
-      spyOn(global.console, 'log').and.callThrough();
+      jest.spyOn(global.console, 'log');
 
       await plugin.callbacks[0]({ changedFiles: ['en/name-space'] });
 
@@ -213,7 +213,7 @@ describe('server-hmr', () => {
     it('should notify when reload fails', async () => {
       reloadError = 'reload failed';
 
-      spyOn(global.console, 'log').and.callThrough();
+      jest.spyOn(global.console, 'log');
 
       await plugin.callbacks[0]({ changedFiles: ['en/name-space'] });
 
