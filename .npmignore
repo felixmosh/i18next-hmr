@@ -3,3 +3,4 @@ examples
 __tests__
 .circleci
 prettier.config.js
+.github
