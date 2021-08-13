@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "i18next": "^20.3.1",
-    "next": "^10.2.3",
+    "next": "^11.1.0",
     "next-i18next": "6.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
