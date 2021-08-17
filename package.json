@@ -37,12 +37,12 @@
     }
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.2",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.6.1",
     "auto-changelog": "^2.2.1",
-    "jest": "^27.0.4",
-    "prettier": "^2.3.1",
-    "release-it": "^14.9.0"
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "release-it": "^14.11.5"
   },
   "release-it": {
     "git": {
