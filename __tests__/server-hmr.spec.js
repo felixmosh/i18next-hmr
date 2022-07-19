@@ -54,6 +54,18 @@ describe('server-hmr', () => {
       );
     });
 
+    it('should notify that server HMR started HMR mode once', async () => {
+      jest.spyOn(global.console, 'log');
+
+      applyServerHMR(i18nMock); // second call
+
+      expect(global.console.log).toHaveBeenCalledTimes(1);
+      expect(global.console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Server HMR has started')
+      );
+      expect(global.console.log).not.toHaveBeenCalledWith(expect.stringContaining('callback mode'));
+    });
+
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
       whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
@@ -154,6 +166,17 @@ describe('server-hmr', () => {
       expect(plugin.addListener).toHaveBeenCalled();
     });
 
+    it('should notify that server HMR started as callback mode once', async () => {
+      jest.spyOn(global.console, 'log');
+
+      applyServerHMR(i18nMock); // second call
+
+      expect(global.console.log).toHaveBeenCalledTimes(1);
+      expect(global.console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Server HMR has started - callback mode')
+      );
+    });
+
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
       plugin.callbacks[0]({ changedFiles: [`${update.lang}/${update.ns}`] });
@@ -226,6 +249,29 @@ describe('server-hmr', () => {
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         ['en', 'de'],
         ['name-space'],
+        expect.any(Function)
+      );
+    });
+  });
+
+  describe('i18n as a getter', () => {
+    beforeEach(() => {
+      global.mockModule = {
+        hot: {
+          accept: jest.fn(),
+        },
+      };
+
+      applyServerHMR(() => i18nMock);
+    });
+
+    it('should reload resources on updated lang, ns', () => {
+      const update = { lang: 'en', ns: 'name-space' };
+      whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
         expect.any(Function)
       );
     });

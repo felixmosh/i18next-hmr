@@ -42,11 +42,17 @@ describe('client-hmr', () => {
     jest.restoreAllMocks();
   });
 
-  it('should warn regarding missing backend options', () => {
+  it('should warn regarding missing backend options once', () => {
     jest.spyOn(global.console, 'warn');
+    i18nMock.options = { ns: ['name-space'] };
+
     applyClientHMR(i18nMock);
+    whenHotTriggeredWith(['en/name-space']);
+    applyClientHMR(i18nMock);
+
+    expect(global.console.warn).toHaveBeenCalledTimes(1);
     expect(global.console.warn).toHaveBeenCalledWith(
-      expect.stringContaining('i18next-backend not found'),
+      expect.stringContaining('i18next-http-backend not found'),
       expect.any(String),
       expect.any(String)
     );
@@ -85,6 +91,22 @@ describe('client-hmr', () => {
     i18nMock.language = 'en';
 
     applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith(['en/name-space']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en'],
+      ['name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
+  });
+
+  it('should trigger reload when i18n given as a getter function', async () => {
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
+    i18nMock.language = 'en';
+
+    applyClientHMR(() => i18nMock);
 
     await whenHotTriggeredWith(['en/name-space']);
 
