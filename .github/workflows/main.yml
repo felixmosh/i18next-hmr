@@ -20,5 +20,10 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'yarn'
 
+      - name: Install Packages
+        run: yarn install --frozen-lockfile
+        env:
+          CI: true
+
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
