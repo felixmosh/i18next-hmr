@@ -17,6 +17,6 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "i18next-hmr": "^1.7.8"
+    "i18next-hmr": "^1.8.0"
   }
 }
