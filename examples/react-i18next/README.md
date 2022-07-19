@@ -439,7 +439,7 @@ class App extends Component {
       .then(({ moduleA }) => {
         // Use moduleA
       })
-      .catch(err => {
+      .catch((err) => {
         // Handle failure
       });
   };
@@ -913,7 +913,7 @@ REACT_APP_SECRET_CODE=abcdef
 
 `.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
 
-#### What other `.env` files are can be used?
+#### What other `.env` files can be used?
 
 > Note: this feature is **available with `react-scripts@1.0.0` and higher**.
 
@@ -932,7 +932,7 @@ These variables will act as the defaults if the machine does not explicitly set 
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
 
 > Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
-> these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
+> these are defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
 ## Can I Use Decorators?
 
@@ -1092,7 +1092,7 @@ You may also narrow down matches using `*` and/or `**`, to match the path exactl
 
 ### Configuring a WebSocket Proxy
 
-When setting up a WebSocket proxy, there are a some extra considerations to be aware of.
+When setting up a WebSocket proxy, there are some extra considerations to be aware of.
 
 If you’re using a WebSocket engine like [Socket.io](https://socket.io/), you must have a Socket.io server running that you can use as the proxy target. Socket.io will not work with a standard WebSocket server. Specifically, don't expect Socket.io to work with [the websocket.org echo test](http://websocket.org/echo.html).
 
@@ -1744,7 +1744,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 

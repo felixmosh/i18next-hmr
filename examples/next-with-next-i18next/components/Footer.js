@@ -1,9 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import pkgJson from 'next-i18next/package.json';
 
-import { version } from 'next-i18next/package.json'
-
-import { withTranslation } from '../i18n'
+import { withTranslation } from '../i18n';
 
 const Footer = ({ t }) => (
   <footer>
@@ -12,13 +11,13 @@ const Footer = ({ t }) => (
     </p>
     <p>
       next-i18next v
-      {version}
+      {pkgJson.version}
     </p>
   </footer>
-)
+);
 
 Footer.propTypes = {
   t: PropTypes.func.isRequired,
-}
+};
 
-export default withTranslation('footer')(Footer)
+export default withTranslation('footer')(Footer);

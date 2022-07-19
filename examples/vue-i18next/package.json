@@ -11,19 +11,19 @@
     "@panter/vue-i18next": "^0.15.2",
     "i18next": "^20.3.1",
     "i18next-xhr-backend": "^3.2.2",
-    "vue": "^2.6.11"
+    "vue": "^2.7.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
-    "babel-loader": "^8.1.0",
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "babel-loader": "^8.2.5",
     "cross-env": "^7.0.2",
     "css-loader": "^5.2.6",
     "file-loader": "^6.0.0",
-    "i18next-hmr": "^1.5.5",
+    "i18next-hmr": "^1.7.8",
     "vue-loader": "^15.9.3",
     "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.6.11",
+    "vue-template-compiler": "^2.7.7",
     "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"

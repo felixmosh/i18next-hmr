@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from 'react';
-import { Trans, useTranslation, withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 import logo from './logo.svg';
 import './App.css';
 
@@ -10,7 +10,6 @@ class LegacyWelcomeClass extends Component {
     return <h2>{t('title')}</h2>;
   }
 }
-
 const Welcome = withTranslation()(LegacyWelcomeClass);
 
 // Component using the Trans component
@@ -26,7 +25,7 @@ function MyComponent() {
 function Page() {
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = lng => {
+  const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
@@ -35,8 +34,12 @@ function Page() {
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Welcome />
-        <button onClick={() => changeLanguage('de')}>de</button>
-        <button onClick={() => changeLanguage('en')}>en</button>
+        <button type="button" onClick={() => changeLanguage('de')}>
+          de
+        </button>
+        <button type="button" onClick={() => changeLanguage('en')}>
+          en
+        </button>
       </div>
       <div className="App-intro">
         <MyComponent />
