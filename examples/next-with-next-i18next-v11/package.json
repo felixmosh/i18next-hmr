@@ -1,0 +1,22 @@
+{
+  "name": "v12",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start -p ${PORT:=3000}"
+  },
+  "dependencies": {
+    "i18next-http-backend": "^1.4.1",
+    "next": "12.2.2",
+    "next-i18next": "11.2.2",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "i18next-hmr": "^1.7.8"
+  }
+}
