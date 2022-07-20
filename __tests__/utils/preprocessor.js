@@ -1,5 +1,7 @@
 module.exports = {
   process(src, path) {
-    return src.replace(/module\.hot/g, 'global.mockModule.hot');
+    return {
+      code: src.replace(/module\.hot/g, 'global.mockModule.hot'),
+    };
   },
 };
