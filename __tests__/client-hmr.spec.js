@@ -233,6 +233,26 @@ describe('client-hmr', () => {
     expect(i18nMock.changeLanguage).not.toHaveBeenCalled();
   });
 
+  it('should support fallbackNS as optional ns', async () => {
+    i18nMock.options = {
+      backend: {},
+      ns: ['nested/name-space'],
+      fallbackNS: ['nested/fallback-name-space'],
+    };
+    i18nMock.language = 'en-US';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith(['nested/fallback-name-space/en-US']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en-US'],
+      ['nested/fallback-name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en-US');
+  });
+
   describe('multiple files', () => {
     it('should support change of multiple files', async () => {
       i18nMock.options = { backend: {}, ns: ['name-space', 'name-space2'] };

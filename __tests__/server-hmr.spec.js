@@ -125,6 +125,18 @@ describe('server-hmr', () => {
       expect(i18nMock.reloadResources).not.toHaveBeenCalled();
     });
 
+    it('should support fallbackNS', async () => {
+      const update = { lang: 'en', ns: 'nested/fallback-name-space' };
+      i18nMock.options.fallbackNS = update.ns;
+      whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
     it('should notify on successful change', async () => {
       jest.spyOn(global.console, 'log');
 
@@ -202,6 +214,18 @@ describe('server-hmr', () => {
     it('should reload resources when changed file based on back slashes (windows)', () => {
       const update = { lang: 'en', ns: 'nested/name-space' };
       plugin.callbacks[0]({ changedFiles: [`${update.lang}\\${update.ns.replace('/', '\\')}`] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
+    it('should support fallbackNS', async () => {
+      const update = { lang: 'en', ns: 'nested/fallback-name-space' };
+      i18nMock.options.fallbackNS = update.ns;
+      plugin.callbacks[0]({ changedFiles: [`${update.lang}/${update.ns}`] });
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         [update.lang],
