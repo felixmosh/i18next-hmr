@@ -182,6 +182,49 @@ describe('server-hmr', () => {
         expect.any(Function)
       );
     });
+
+    it('should support options.supportedLngs as a language source', async () => {
+      i18nMock.language = 'en-US';
+      i18nMock.options = {
+        backend: {},
+        ns: ['nested/name-space'],
+        supportedLngs: [i18nMock.language],
+      };
+
+      await whenNativeHMRTriggeredWith(['nested/name-space/locales/en-US']);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
+        expect.any(Function)
+      );
+    });
+
+    it('should support options.lng as a language source', async () => {
+      i18nMock.language = 'en-US';
+      i18nMock.options = { backend: {}, ns: ['nested/name-space'], lng: i18nMock.language };
+
+      await whenNativeHMRTriggeredWith(['nested/name-space/locales/en-US']);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
+        expect.any(Function)
+      );
+    });
+
+    it('should support options.fallbackLng as a language source', async () => {
+      i18nMock.language = 'en-US';
+      i18nMock.options = { backend: {}, ns: ['nested/name-space'], fallbackLng: i18nMock.language };
+
+      await whenNativeHMRTriggeredWith(['nested/name-space/locales/en-US']);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
+        expect.any(Function)
+      );
+    });
   });
 
   describe('without native HMR', () => {
@@ -297,6 +340,49 @@ describe('server-hmr', () => {
       i18nMock.options = { backend: {}, ns: ['nested/name-space'] };
       i18nMock.language = 'en-US';
       i18nMock.languages.push(i18nMock.language);
+
+      plugin.callbacks[0]({ changedFiles: ['nested/name-space/locales/en-US'] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
+        expect.any(Function)
+      );
+    });
+
+    it('should support options.supportedLngs as a language source', async () => {
+      i18nMock.language = 'en-US';
+      i18nMock.options = {
+        backend: {},
+        ns: ['nested/name-space'],
+        supportedLngs: [i18nMock.language],
+      };
+
+      plugin.callbacks[0]({ changedFiles: ['nested/name-space/locales/en-US'] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
+        expect.any(Function)
+      );
+    });
+
+    it('should support options.lng as a language source', async () => {
+      i18nMock.language = 'en-US';
+      i18nMock.options = { backend: {}, ns: ['nested/name-space'], lng: i18nMock.language };
+
+      plugin.callbacks[0]({ changedFiles: ['nested/name-space/locales/en-US'] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
+        expect.any(Function)
+      );
+    });
+
+    it('should support options.fallbackLng as a language source', async () => {
+      i18nMock.language = 'en-US';
+      i18nMock.options = { backend: {}, ns: ['nested/name-space'], fallbackLng: i18nMock.language };
 
       plugin.callbacks[0]({ changedFiles: ['nested/name-space/locales/en-US'] });
 
