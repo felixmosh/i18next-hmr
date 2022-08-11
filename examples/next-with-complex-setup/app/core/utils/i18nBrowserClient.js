@@ -9,7 +9,7 @@ export const createClient = (config) => {
   const backend = {
     backend: HttpBackend,
     backendOption: {
-      loadPath: '/api/locales?lng={{lng}}&ns={{ns}}',
+      loadPath: 'http://localhost:3000/api/locales?lng={{lng}}&ns={{ns}}',
     },
   };
 
