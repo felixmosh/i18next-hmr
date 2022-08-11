@@ -31,7 +31,10 @@ module.exports = {
   ...
   plugins: [
     new I18NextHMRPlugin({
-      localesDir: path.resolve(__dirname, 'static/locales'),
+      localesDir: path.resolve(__dirname, 'static/locales'), 
+      localesDirs: [
+         // use this property for multiple locales directories   
+      ]
     })
   ]
 };
