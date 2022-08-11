@@ -5,6 +5,7 @@ jest.mock('../lib/trigger.js', () => {
 });
 const applyServerHMR = require('../lib/server-hmr');
 const plugin = require('../lib/plugin');
+const applyClientHMR = require('../lib/client-hmr');
 
 function whenNativeHMRTriggeredWith(changedFiles) {
   changedData.changedFiles = changedFiles;
@@ -28,6 +29,7 @@ describe('server-hmr', () => {
         return Promise.resolve();
       }),
       options: { ns: ['name-space', 'nested/name-space'] },
+      languages: ['en', 'de'],
     };
     jest.spyOn(plugin, 'addListener');
   });
@@ -166,6 +168,20 @@ describe('server-hmr', () => {
         expect.any(Function)
       );
     });
+
+    it('should support complex localePath {{ns}}/locales/{{lng}}.json', async () => {
+      i18nMock.options = { backend: {}, ns: ['nested/name-space'] };
+      i18nMock.language = 'en-US';
+      i18nMock.languages.push(i18nMock.language);
+
+      await whenNativeHMRTriggeredWith(['nested/name-space/locales/en-US']);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
+        expect.any(Function)
+      );
+    });
   });
 
   describe('without native HMR', () => {
@@ -273,6 +289,20 @@ describe('server-hmr', () => {
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
         ['en', 'de'],
         ['name-space'],
+        expect.any(Function)
+      );
+    });
+
+    it('should support complex localePath {{ns}}/locales/{{lng}}.json', async () => {
+      i18nMock.options = { backend: {}, ns: ['nested/name-space'] };
+      i18nMock.language = 'en-US';
+      i18nMock.languages.push(i18nMock.language);
+
+      plugin.callbacks[0]({ changedFiles: ['nested/name-space/locales/en-US'] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        ['en-US'],
+        ['nested/name-space'],
         expect.any(Function)
       );
     });

@@ -33,6 +33,7 @@ describe('client-hmr', () => {
         return Promise.resolve();
       }),
       changeLanguage: jest.fn(),
+      languages: ['en', 'de', 'en-US'],
     };
 
     mockModule.hot.accept.mockReset();
@@ -48,7 +49,6 @@ describe('client-hmr', () => {
 
     applyClientHMR(i18nMock);
     whenHotTriggeredWith(['en/name-space']);
-    applyClientHMR(i18nMock);
 
     expect(global.console.warn).toHaveBeenCalledTimes(1);
     expect(global.console.warn).toHaveBeenCalledWith(
@@ -169,6 +169,7 @@ describe('client-hmr', () => {
   it('should not trigger changeLanguage when current lang is not the one that was edited', async () => {
     i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
+    i18nMock.languages.push('otherLang');
 
     applyClientHMR(i18nMock);
 
@@ -248,6 +249,22 @@ describe('client-hmr', () => {
     expect(i18nMock.reloadResources).toHaveBeenCalledWith(
       ['en-US'],
       ['nested/fallback-name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en-US');
+  });
+
+  it('should support complex localePath {{ns}}/locales/{{lng}}.json', async () => {
+    i18nMock.options = { backend: {}, ns: ['nested/name-space'] };
+    i18nMock.language = 'en-US';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith(['nested/name-space/locales/en-US']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en-US'],
+      ['nested/name-space'],
       expect.any(Function)
     );
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en-US');
