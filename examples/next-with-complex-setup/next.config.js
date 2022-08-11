@@ -15,7 +15,10 @@ const nextConfig = {
       config.plugins.push(
         // TODO: Investigate how to add multiple locales folders
         new I18NextHMRPlugin({
-          localesDir: path.resolve(__dirname, 'app/core/locales'),
+          localesDirs: [
+            path.resolve(__dirname, 'app/core/locales'),
+            path.resolve(__dirname, 'app/features')
+          ],
         })
       );
     }
