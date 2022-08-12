@@ -1,7 +1,7 @@
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useSiteTranslation } from '../hooks/useSiteTranslation';
 
-export const Navbar = () => {
+export const SiteLanguageSelector = () => {
   const router = useRouter();
   const { t, i18n } = useSiteTranslation();
 
@@ -9,10 +9,10 @@ export const Navbar = () => {
     <div>
       {t('language')}:{' '}
       <select
-        defaultValue={router.locale}
+        defaultValue={i18n.language}
         onChange={(event) => {
-          const locale = event.target.value;
-          i18n.changeLanguage(locale, () => {
+          const language = event.target.value;
+          i18n.changeLanguage(language, () => {
             router.push(
               {
                 pathname: router.pathname,
@@ -21,7 +21,7 @@ export const Navbar = () => {
                 },
               },
               undefined,
-              { shallow: true, locale }
+              { shallow: true, locale: language }
             );
           });
         }}

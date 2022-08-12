@@ -1,5 +1,7 @@
 import Head from 'next/head';
-import { Navbar } from '../app/core/components/Navbar';
+import { ReportLanguageSelector } from '../app/core/components/ReportLanguageSelector';
+import { SiteLanguageSelector } from '../app/core/components/SiteLanguageSelector';
+import { serverSideReportTranslations } from '../app/core/utils/serverSideReportTranslations';
 import { serverSideSiteTranslations } from '../app/core/utils/serverSideSiteTranslations';
 import { Feature1 } from '../app/features/feature1/components/Feature1';
 import { Feature2 } from '../app/features/feature2/components/Feature2';
@@ -13,9 +15,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
-
+      <SiteLanguageSelector />
       <Feature1 />
+
+      <ReportLanguageSelector />
       <Feature2 />
     </div>
   );
@@ -24,5 +27,6 @@ export default function Home() {
 export const getServerSideProps = async ({ locale, locales }) => ({
   props: {
     ...(await serverSideSiteTranslations(locale, locales, ['feature1', 'feature2'])),
+    ...(await serverSideReportTranslations(locale, locales, ['feature1', 'feature2'])),
   },
 });

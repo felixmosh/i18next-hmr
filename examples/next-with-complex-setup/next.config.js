@@ -13,11 +13,10 @@ const nextConfig = {
       const { I18NextHMRPlugin } = require('i18next-hmr/plugin');
       const path = require('path');
       config.plugins.push(
-        // TODO: Investigate how to add multiple locales folders
         new I18NextHMRPlugin({
           localesDirs: [
             path.resolve(__dirname, 'app/core/locales'),
-            path.resolve(__dirname, 'app/features')
+            path.resolve(__dirname, 'app/features'),
           ],
         })
       );
