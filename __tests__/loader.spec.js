@@ -2,13 +2,10 @@ const loader = require('../lib/loader');
 
 describe('loader', () => {
   let context;
-  const options = {
-    lang: 'en',
-    ns: 'namespace',
-  };
+  const options = ['en/namespace'];
   const query = {
     getChangedLang: jest.fn().mockImplementation(() => options),
-    localesDir: 'locals-dir',
+    localesDirs: ['locals-dir'],
   };
   const content = `module.exports = '__PLACEHOLDER__';`;
 
@@ -21,7 +18,16 @@ describe('loader', () => {
 
   it('should add localesDir as context dependency', () => {
     loader.apply(context, [content]);
-    expect(context.addContextDependency).toHaveBeenCalledWith(query.localesDir);
+    expect(context.addContextDependency).toHaveBeenCalledWith(query.localesDirs[0]);
+  });
+
+  it('should add all locale dirs as context dependency', () => {
+    query.localesDirs = ['folder1', 'folder2'];
+    loader.apply(context, [content]);
+
+    expect(context.addContextDependency).toHaveBeenCalledTimes(query.localesDirs.length);
+    expect(context.addContextDependency).toHaveBeenCalledWith(query.localesDirs[0]);
+    expect(context.addContextDependency).toHaveBeenCalledWith(query.localesDirs[1]);
   });
 
   it('should inject an object', () => {
