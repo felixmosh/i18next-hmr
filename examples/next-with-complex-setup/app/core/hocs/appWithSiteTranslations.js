@@ -2,7 +2,10 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { useMemo } from 'react';
 import { I18nSiteContextProvider } from '../contexts/I18nSiteContext';
 import { createClient } from '../utils/i18nBrowserClient';
-import { setupI18nextHmr } from '../utils/setupI18nextHmr';
+import { addToHMRList } from '../utils/setupI18nextHmr';
+
+let globalInstance = null;
+addToHMRList(() => globalInstance);
 
 export const appWithSiteTranslations = (WrappedComponent) => {
   const AppWithSiteTranslations = (props) => {
@@ -22,7 +25,7 @@ export const appWithSiteTranslations = (WrappedComponent) => {
     }, [serverData]);
 
     if (i18nInstance) {
-      setupI18nextHmr(i18nInstance);
+      globalInstance = i18nInstance;
     }
 
     if (!serverData || !i18nInstance) {

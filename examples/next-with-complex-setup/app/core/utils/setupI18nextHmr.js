@@ -1,11 +1,17 @@
-export const setupI18nextHmr = async (i18nInstance) => {
+const list = [];
+
+export function addToHMRList(i18nInstance) {
+  list.push(i18nInstance);
+}
+
+export const setupI18nextHmr = async () => {
   if (process.env.NODE_ENV !== 'production') {
     if (typeof window !== 'undefined') {
       const { applyClientHMR } = await import('i18next-hmr/client');
-      applyClientHMR(i18nInstance);
+      applyClientHMR(list);
     } else {
       const { applyServerHMR } = await import('i18next-hmr/server');
-      applyServerHMR(i18nInstance);
+      applyServerHMR(list);
     }
   }
 };
