@@ -22,6 +22,6 @@
   "devDependencies": {
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.4",
-    "i18next-hmr": "felixmosh/i18next-hmr#multiple-locales-dirs"
+    "i18next-hmr": "felixmosh/i18next-hmr#dynamic-instance"
   }
 }
