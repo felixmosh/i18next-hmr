@@ -401,12 +401,12 @@ describe('server-hmr', () => {
           accept: jest.fn(),
         },
       };
-
-      applyServerHMR(() => i18nMock);
     });
 
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
+      applyServerHMR(() => i18nMock);
+
       whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(
@@ -414,6 +414,18 @@ describe('server-hmr', () => {
         [update.ns],
         expect.any(Function)
       );
+    });
+
+    it('should pass changed filed to the i18next getter', () => {
+      const update = { lang: 'en', ns: 'name-space' };
+
+      const getter = jest.fn().mockImplementation(() => i18nMock);
+      const changedFiles = [`${update.lang}/${update.ns}`];
+      applyServerHMR(getter);
+
+      whenNativeHMRTriggeredWith(changedFiles);
+
+      expect(getter).toHaveBeenCalledWith({ changedFiles });
     });
   });
 });

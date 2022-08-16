@@ -118,13 +118,25 @@ describe('client-hmr', () => {
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
   });
 
-  it('should trigger reload when lng-country combination file changed', async () => {
+  it('should pass changed filed to the i18next getter', () => {
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
+    i18nMock.language = 'en';
+    const getter = jest.fn().mockImplementation(() => i18nMock);
+    const changedFiles = ['en/name-space'];
+
+    applyClientHMR(getter);
+    whenHotTriggeredWith(changedFiles);
+
+    expect(getter).toHaveBeenCalledWith({ changedFiles });
+  });
+
+  it('should trigger reload when lng-country combination file changed', () => {
     i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en-US';
 
     applyClientHMR(i18nMock);
 
-    await whenHotTriggeredWith(['en-US/name-space']);
+    whenHotTriggeredWith(['en-US/name-space']);
 
     expect(i18nMock.reloadResources).toHaveBeenCalledWith(
       ['en-US'],
