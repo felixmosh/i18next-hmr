@@ -139,6 +139,19 @@ describe('server-hmr', () => {
       );
     });
 
+    it('should support defaultNS as source of ns', async () => {
+      const update = { lang: 'en', ns: 'nested/fallback-name-space' };
+      i18nMock.options.ns = [];
+      i18nMock.options.defaultNS = update.ns;
+      whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
     it('should notify on successful change', async () => {
       jest.spyOn(global.console, 'log');
 
@@ -284,6 +297,19 @@ describe('server-hmr', () => {
     it('should support fallbackNS', async () => {
       const update = { lang: 'en', ns: 'nested/fallback-name-space' };
       i18nMock.options.fallbackNS = update.ns;
+      plugin.callbacks[0]({ changedFiles: [`${update.lang}/${update.ns}`] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+        [update.lang],
+        [update.ns],
+        expect.any(Function)
+      );
+    });
+
+    it('should support defaultNS as source of ns', async () => {
+      const update = { lang: 'en', ns: 'nested/fallback-name-space' };
+      i18nMock.options.ns = [];
+      i18nMock.options.defaultNS = update.ns;
       plugin.callbacks[0]({ changedFiles: [`${update.lang}/${update.ns}`] });
 
       expect(i18nMock.reloadResources).toHaveBeenCalledWith(

@@ -266,6 +266,26 @@ describe('client-hmr', () => {
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en-US');
   });
 
+  it('should support defaultNS as optional ns', async () => {
+    i18nMock.options = {
+      backend: {},
+      ns: [],
+      defaultNS: ['common'],
+    };
+    i18nMock.language = 'en-US';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith(['common/en-US']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['en-US'],
+      ['common'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en-US');
+  });
+
   it('should support complex localePath {{ns}}/locales/{{lng}}.json', async () => {
     i18nMock.options = { backend: {}, ns: ['nested/name-space'] };
     i18nMock.language = 'en-US';
