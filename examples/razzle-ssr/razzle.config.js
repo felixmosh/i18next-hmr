@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   modifyWebpackConfig: ({ webpackConfig, env: { dev } }) => {
     if (dev) {
-      const { I18NextHMRPlugin } = require('i18next-hmr/plugin');
+      const { I18NextHMRPlugin } = require('i18next-hmr/webpack');
       webpackConfig.plugins.push(
         new I18NextHMRPlugin({
           localesDir: path.resolve(__dirname, 'src/locales'),

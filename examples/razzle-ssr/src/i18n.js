@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { HMRPlugin } from 'i18next-hmr/plugin';
 
 const options = {
   fallbackLng: 'en',
@@ -27,20 +28,16 @@ const options = {
 
 // for browser use xhr backend to load translations and browser lng detector
 if (process && !process.release) {
-  i18n
-    .use(XHR)
-    .use(initReactI18next)
-    .use(LanguageDetector);
+  i18n.use(XHR).use(initReactI18next).use(LanguageDetector);
 }
 
 // initialize if not already initialized
 if (!i18n.isInitialized) {
-  i18n.init(options);
-
   if (process.env.NODE_ENV !== 'production') {
-    const { applyClientHMR } = require('i18next-hmr/client');
-    applyClientHMR(i18n);
+    i18n.use(new HMRPlugin({ client: true }));
   }
+
+  i18n.init(options);
 }
 
 export default i18n;

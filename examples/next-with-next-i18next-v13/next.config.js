@@ -4,8 +4,8 @@ const path = require('path');
 module.exports = {
   i18n,
   webpack(config, { isServer }) {
-    if (config.mode === 'development') {
-      const { I18NextHMRPlugin } = require('i18next-hmr/plugin');
+    if (!isServer && config.mode === 'development') {
+      const { I18NextHMRPlugin } = require('i18next-hmr/webpack');
       config.plugins.push(
         new I18NextHMRPlugin({
           localesDir: path.resolve(__dirname, 'public/locales'),

@@ -19,13 +19,13 @@ $ npm install --save-dev i18next-hmr
 
 ## Usage
 
-Add the plugin to your webpack config (or nextjs).
+Add the plugin to your webpack config (or next.config.js).
 
 <!-- prettier-ignore-start -->
 
 ```js
 // webpack.config.js
-const { I18NextHMRPlugin } = require('i18next-hmr/plugin');
+const { I18NextHMRPlugin } = require('i18next-hmr/webpack');
 
 module.exports = {
   ...
@@ -44,12 +44,22 @@ module.exports = {
 
 ```js
 // i18next.config.js
+const Backend = require('i18next-http-backend');
 const i18next = require('i18next');
-i18next.init(options, callback);
+const { HMRPlugin } = require('i18next-hmr/plugin');
+
+const instance = i18next.use(Backend); // http-backend is required for client side reloading
+
 if (process.env.NODE_ENV !== 'production') {
-  const { applyClientHMR } = require('i18next-hmr/client');
-  applyClientHMR(i18next);
+   instance.use(new HMRPlugin({ 
+      client: typeof window !== 'undefined', // enabled client side HMR
+      server: typeof window === 'undefined'  // enabled server side HMR
+   }));
 }
+
+instance.init(options, callback);
+
+module.exports = instance;
 ```
 
 <!-- prettier-ignore-start -->
@@ -57,13 +67,6 @@ if (process.env.NODE_ENV !== 'production') {
 ```js
 // server.js
 const express = require('express');
-
-const i18n = require('./i18n');
-
-if (process.env.NODE_ENV !== 'production') {
-  const { applyServerHMR } = require('i18next-hmr/server');
-  applyServerHMR(i18n);
-}
 
 const port = process.env.PORT || 3000;
 
@@ -85,8 +88,8 @@ The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.
 ⚠️ If your server side is bundled using Webpack, the lib will use the native HMR (if enabled), for it to work properly the lib must be **bundled**, therefore, you should specify the lib as not [external](https://webpack.js.org/configuration/externals/).
 There are 2 ways to do that:
 
-1. if you are using [webpack-node-externals](https://github.com/liady/webpack-node-externals) specify `i18next-hmr` in the [`whitelist`](https://github.com/liady/webpack-node-externals#optionswhitelist-).
-2. use a relative path to `node_modules`, something like:
+1. If you are using [webpack-node-externals](https://github.com/liady/webpack-node-externals) specify `i18next-hmr` in the [`whitelist`](https://github.com/liady/webpack-node-externals#optionswhitelist-).
+2. (deprecated method) use a relative path to `node_modules`, something like:
    ```js
    // server.entry.js
    if (process.env.NODE_ENV !== 'production') {

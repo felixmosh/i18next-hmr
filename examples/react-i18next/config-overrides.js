@@ -1,4 +1,4 @@
-const { I18NextHMRPlugin } = require('i18next-hmr/plugin');
+const { I18NextHMRPlugin } = require('i18next-hmr/webpack');
 const path = require('path');
 
 module.exports = {

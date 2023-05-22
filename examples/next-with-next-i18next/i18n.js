@@ -5,7 +5,7 @@
 
 const NextI18Next = require('next-i18next').default;
 const { localeSubpaths } = require('next/config').default().publicRuntimeConfig;
-
+const { HMRPlugin } = require('i18next-hmr/plugin');
 const localeSubpathVariations = {
   none: {},
   foreign: {
@@ -20,11 +20,15 @@ const localeSubpathVariations = {
 const nextI18Next = new NextI18Next({
   otherLanguages: ['de'],
   localeSubpaths: localeSubpathVariations[localeSubpaths],
+  use:
+    process.env.NODE_ENV !== 'production'
+      ? [
+          new HMRPlugin({
+            client: typeof window !== 'undefined',
+            server: typeof window === 'undefined',
+          }),
+        ]
+      : undefined,
 });
-
-if (process.env.NODE_ENV !== 'production') {
-  const { applyClientHMR } = require('i18next-hmr');
-  applyClientHMR(nextI18Next.i18n);
-}
 
 module.exports = nextI18Next;

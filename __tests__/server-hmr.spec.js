@@ -4,7 +4,7 @@ jest.mock('../lib/trigger.js', () => {
   return changedData;
 });
 const applyServerHMR = require('../lib/server-hmr');
-const plugin = require('../lib/plugin');
+const plugin = require('../lib/webpack/plugin');
 const applyClientHMR = require('../lib/client-hmr');
 
 function whenNativeHMRTriggeredWith(changedFiles) {

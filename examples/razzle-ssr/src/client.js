@@ -1,5 +1,5 @@
 import App from './App';
-import BrowserRouter from 'react-router-dom/BrowserRouter';
+import { BrowserRouter } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import { hydrate } from 'react-dom';
 import { useSSR } from 'react-i18next';
@@ -14,12 +14,9 @@ const BaseApp = () => {
       </BrowserRouter>
     </Suspense>
   );
-}
+};
 
-hydrate(
-  <BaseApp />,
-  document.getElementById('root'),
-);
+hydrate(<BaseApp />, document.getElementById('root'));
 
 if (module.hot) {
   module.hot.accept();

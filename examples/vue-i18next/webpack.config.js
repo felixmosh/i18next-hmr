@@ -1,6 +1,6 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const { I18NextHMRPlugin } = require('i18next-hmr/plugin');
+const { I18NextHMRPlugin } = require('i18next-hmr/webpack');
 
 module.exports = {
   entry: './src/main.js',

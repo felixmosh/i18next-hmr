@@ -11,6 +11,7 @@ import { I18nextProvider } from 'react-i18next';
 import Backend from 'i18next-node-fs-backend';
 import App from './App';
 import i18n from './i18n';
+import { HMRPlugin } from 'i18next-hmr/plugin';
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -28,49 +29,52 @@ if (process.env.NODE_ENV !== 'production') {
   applyServerHMR(i18n);
 }
 
-i18n
-  .use(Backend)
-  .use(i18nextMiddleware.LanguageDetector)
-  .init(
-    {
-      debug: false,
-      preload: ['en', 'de'],
-      ns: ['translations'],
-      defaultNS: 'translations',
-      backend: {
-        loadPath: `${appSrc}/locales/{{lng}}/{{ns}}.json`,
-        addPath: `${appSrc}/locales/{{lng}}/{{ns}}.missing.json`,
-      },
-    },
-    () => {
-      server
-        .disable('x-powered-by')
-        .use(i18nextMiddleware.handle(i18n))
-        .use('/locales', express.static(`${appSrc}/locales`))
-        .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-        .get('/*', (req, res) => {
-          const context = {};
-          const markup = renderToString(
-            <I18nextProvider i18n={req.i18n}>
-              <StaticRouter context={context} location={req.url}>
-                <App />
-              </StaticRouter>
-            </I18nextProvider>
-          );
-          // This line must be placed after renderToString method
-          // otherwise context won't be populated by App
-          const { url } = context;
-          if (url) {
-            res.redirect(url);
-          } else {
-            const initialI18nStore = {};
-            req.i18n.languages.forEach((l) => {
-              initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
-            });
-            const initialLanguage = req.i18n.language;
+const instance = i18n.use(Backend).use(i18nextMiddleware.LanguageDetector);
 
-            res.status(200).send(
-              `<!doctype html>
+if (process.env.NODE_ENV !== 'production') {
+  instance.use(new HMRPlugin({ server: true }));
+}
+
+instance.init(
+  {
+    debug: false,
+    preload: ['en', 'de'],
+    ns: ['translations'],
+    defaultNS: 'translations',
+    backend: {
+      loadPath: `${appSrc}/locales/{{lng}}/{{ns}}.json`,
+      addPath: `${appSrc}/locales/{{lng}}/{{ns}}.missing.json`,
+    },
+  },
+  () => {
+    server
+      .disable('x-powered-by')
+      .use(i18nextMiddleware.handle(i18n))
+      .use('/locales', express.static(`${appSrc}/locales`))
+      .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+      .get('/*', (req, res) => {
+        const context = {};
+        const markup = renderToString(
+          <I18nextProvider i18n={req.i18n}>
+            <StaticRouter context={context} location={req.url}>
+              <App />
+            </StaticRouter>
+          </I18nextProvider>
+        );
+        // This line must be placed after renderToString method
+        // otherwise context won't be populated by App
+        const { url } = context;
+        if (url) {
+          res.redirect(url);
+        } else {
+          const initialI18nStore = {};
+          req.i18n.languages.forEach((l) => {
+            initialI18nStore[l] = req.i18n.services.resourceStore.data[l];
+          });
+          const initialLanguage = req.i18n.language;
+
+          res.status(200).send(
+            `<!doctype html>
         <html lang="">
         <head>
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -88,10 +92,10 @@ i18n
             <div id="root">${markup}</div>
         </body>
     </html>`
-            );
-          }
-        });
-    }
-  );
+          );
+        }
+      });
+  }
+);
 
 export default server;
