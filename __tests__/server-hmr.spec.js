@@ -453,5 +453,15 @@ describe('server-hmr', () => {
 
       expect(getter).toHaveBeenCalledWith({ changedFiles });
     });
+
+    it('should not fail when getter returns a none i18next instance', () => {
+      const update = { lang: 'en', ns: 'name-space' };
+
+      const getter = jest.fn().mockImplementation(() => null);
+      const changedFiles = [`${update.lang}/${update.ns}`];
+      applyServerHMR(getter);
+
+      expect(() => whenNativeHMRTriggeredWith(changedFiles)).not.toThrow();
+    });
   });
 });
