@@ -52,8 +52,8 @@ const instance = i18next.use(Backend); // http-backend is required for client si
 
 if (process.env.NODE_ENV !== 'production') {
    instance.use(new HMRPlugin({ 
-      client: typeof window !== 'undefined', // enabled client side HMR
-      server: typeof window === 'undefined'  // enabled server side HMR
+      client: typeof window !== 'undefined', // enables client side HMR
+      server: typeof window === 'undefined'  // enables server side HMR
    }));
 }
 
@@ -62,22 +62,8 @@ instance.init(options, callback);
 module.exports = instance;
 ```
 
-<!-- prettier-ignore-start -->
 
-```js
-// server.js
-const express = require('express');
 
-const port = process.env.PORT || 3000;
-
-(async () => {
-  const server = express();
-  server.get('*', (req, res) => handle(req, res));
-
-  await server.listen(port);
-  console.log(`> Ready on http://localhost:${port}`);
-})();
-```
 
 Start the app with `NODE_ENV=development`
 
