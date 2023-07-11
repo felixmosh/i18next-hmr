@@ -1,5 +1,5 @@
 const HttpBackend = require('i18next-http-backend/cjs');
-const { HMRPlugin } = require('i18next-hmr/plugin');
+const HMRPlugin = process.env.NODE_ENV !== 'production' ? require('i18next-hmr/plugin').HMRPlugin : undefined;
 
 module.exports = {
   // https://www.i18next.com/overview/configuration-options#logging
