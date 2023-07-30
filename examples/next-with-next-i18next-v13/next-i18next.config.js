@@ -15,6 +15,8 @@ module.exports = {
       }
     : {}),
   serializeConfig: false,
+  // allows reloading translations on each page navigation / a hacky way to reload translations on the server at Next v13
+  reloadOnPrerender: process.env.NODE_ENV === 'development',
   use:
     process.env.NODE_ENV !== 'production'
       ? typeof window !== 'undefined'
