@@ -23,7 +23,7 @@
   "devDependencies": {
     "babel-preset-razzle": "^4.0.4",
     "html-webpack-plugin": "^5.3.1",
-    "i18next-hmr": "^2.0.0",
+    "i18next-hmr": "^3.0.0",
     "mini-css-extract-plugin": "^1.6.0",
     "razzle-dev-utils": "^4.0.4",
     "webpack": "^5.39.0",

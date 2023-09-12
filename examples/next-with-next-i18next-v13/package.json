@@ -19,6 +19,6 @@
     "react-i18next": "^12.3.1"
   },
   "devDependencies": {
-    "i18next-hmr": "^2.0.0"
+    "i18next-hmr": "^3.0.0"
   }
 }
