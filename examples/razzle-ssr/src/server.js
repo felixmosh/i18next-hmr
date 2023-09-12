@@ -32,7 +32,7 @@ if (process.env.NODE_ENV !== 'production') {
 const instance = i18n.use(Backend).use(i18nextMiddleware.LanguageDetector);
 
 if (process.env.NODE_ENV !== 'production') {
-  instance.use(new HMRPlugin({ server: true }));
+  instance.use(new HMRPlugin({ webpack: { server: true } }));
 }
 
 instance.init(

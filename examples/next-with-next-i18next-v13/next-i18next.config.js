@@ -18,7 +18,7 @@ module.exports = {
   use:
     process.env.NODE_ENV !== 'production'
       ? typeof window !== 'undefined'
-        ? [HttpBackend, new HMRPlugin({ client: true })]
-        : [new HMRPlugin({ server: true })]
+        ? [HttpBackend, new HMRPlugin({ webpack: { client: true } })]
+        : [new HMRPlugin({ webpack: { server: true } })]
       : [],
 };

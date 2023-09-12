@@ -34,7 +34,7 @@ if (process && !process.release) {
 // initialize if not already initialized
 if (!i18n.isInitialized) {
   if (process.env.NODE_ENV !== 'production') {
-    i18n.use(new HMRPlugin({ client: true }));
+    i18n.use(new HMRPlugin({ webpack: { client: true } }));
   }
 
   i18n.init(options);
