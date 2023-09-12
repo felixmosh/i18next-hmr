@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/i18next-hmr.svg)](https://www.npmjs.com/package/i18next-hmr)
 ![CI](https://github.com/felixmosh/i18next-hmr/workflows/CI/badge.svg)
 
-I18Next HMR🔥 webpack / vite plugin that allows reloading translation resources on the client &amp; the server instantly.
+I18Next HMR🔥 webpack / vite plugin that allows reload translation resources instantly on the client &amp; the server.
 
 ## Requirements
 
