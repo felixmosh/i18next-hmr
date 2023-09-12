@@ -1,7 +1,7 @@
 {
   "name": "i18next-hmr",
-  "version": "2.0.1",
-  "description": "I18Next HMR\uD83D\uDD25 webpack / vite plugin that allows reload translation resources instantly on the client & the server.",
+  "version": "3.0.0",
+  "description": "I18Next HMR🔥 webpack / vite plugin that allows reload translation resources instantly on the client & the server.",
   "keywords": [
     "i18next",
     "HMR",
