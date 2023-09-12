@@ -15,7 +15,7 @@ const instance = i18n
   .use(initReactI18next);
 
 if (process.env.NODE_ENV !== 'production') {
-  instance.use(new HMRPlugin({ client: true }));
+  instance.use(new HMRPlugin({ webpack: { client: true } }));
 }
 
 instance.init({

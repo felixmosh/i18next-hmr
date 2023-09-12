@@ -3,12 +3,13 @@
 [![npm](https://img.shields.io/npm/v/i18next-hmr.svg)](https://www.npmjs.com/package/i18next-hmr)
 ![CI](https://github.com/felixmosh/i18next-hmr/workflows/CI/badge.svg)
 
-I18Next HMR🔥 webpack plugin that allows reloading translation resources on the client &amp; the server
+I18Next HMR🔥 webpack / vite plugin that allows reload translation resources instantly on the client &amp; the server.
 
 ## Requirements
 
 - Node.js v10 or above
-- Webpack 4.x - 5.x
+- Webpack v4.x - v5.x
+- Vite v3
 
 
 ## Installation
@@ -51,9 +52,14 @@ const { HMRPlugin } = require('i18next-hmr/plugin');
 const instance = i18next.use(Backend); // http-backend is required for client side reloading
 
 if (process.env.NODE_ENV !== 'production') {
-   instance.use(new HMRPlugin({ 
-      client: typeof window !== 'undefined', // enables client side HMR
-      server: typeof window === 'undefined'  // enables server side HMR
+   instance.use(new HMRPlugin({
+      webpack: {
+         client: typeof window !== 'undefined', // enables client side HMR in webpack
+         server: typeof window === 'undefined'  // enables server side HMR in webpack
+      },
+      vite: {
+         client: typeof window !== 'undefined', // enables client side HMR in Vite
+      }
    }));
 }
 
@@ -69,7 +75,7 @@ Start the app with `NODE_ENV=development`
 
 ### Server side
 
-The lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed.
+This lib will trigger [`i18n.reloadResources([lang], [ns])`](https://www.i18next.com/overview/api#reloadresources) on the server side with `lang` & `namespace` extracted from the translation filename that was changed.
 
 ⚠️ If your server side is bundled using Webpack, the lib will use the native HMR (if enabled), for it to work properly the lib must be **bundled**, therefore, you should specify the lib as not [external](https://webpack.js.org/configuration/externals/).
 There are 2 ways to do that:
@@ -86,7 +92,7 @@ There are 2 ways to do that:
 
 ### Client side
 
-The lib will invoke Webpack's HMR to update client side, that will re-fetch (with cache killer) the updated translation files and trigger [`i18n.changelanguage(lang)`](https://www.i18next.com/overview/api#changelanguage) to trigger listeners (which in React apps it will update the UI).
+The lib will invoke Webpack's / Vite HMR to update client side, that will re-fetch (with cache killer) the updated translation files and trigger [`i18n.changelanguage(lang)`](https://www.i18next.com/overview/api#changelanguage) to trigger listeners (which in React apps it will update the UI).
 
 ## Example
 

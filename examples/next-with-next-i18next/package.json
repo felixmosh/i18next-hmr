@@ -12,7 +12,7 @@
     "start:prod": "NODE_ENV=production node index.js"
   },
   "devDependencies": {
-    "i18next-hmr": "^2.0.0"
+    "i18next-hmr": "^3.0.0"
   },
   "dependencies": {
     "express": "^4.17.1",

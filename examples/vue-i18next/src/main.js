@@ -10,7 +10,7 @@ Vue.use(VueI18Next);
 const instance = i18next.use(Backend);
 
 if (process.env.NODE_ENV !== 'production') {
-  instance.use(new HMRPlugin({ client: true }));
+  instance.use(new HMRPlugin({ webpack: { client: true } }));
 }
 
 instance.init({

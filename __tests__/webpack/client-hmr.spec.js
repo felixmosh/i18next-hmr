@@ -1,5 +1,5 @@
 let changedData = {};
-jest.mock('../lib/trigger.js', () => {
+jest.mock('../../lib/webpack/trigger.js', () => {
   return changedData;
 });
 
@@ -9,7 +9,7 @@ global.mockModule = {
   },
 };
 
-const applyClientHMR = require('../lib/client-hmr');
+const applyClientHMR = require('../../lib/webpack/client-hmr');
 
 function whenHotTriggeredWith(changedFiles) {
   changedData.changedFiles = changedFiles;

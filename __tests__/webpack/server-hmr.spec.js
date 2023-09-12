@@ -1,11 +1,10 @@
 const changedData = {};
 
-jest.mock('../lib/trigger.js', () => {
+jest.mock('../../lib/webpack/trigger.js', () => {
   return changedData;
 });
-const applyServerHMR = require('../lib/server-hmr');
-const plugin = require('../lib/webpack/plugin');
-const applyClientHMR = require('../lib/client-hmr');
+const applyServerHMR = require('../../lib/webpack/server-hmr');
+const plugin = require('../../lib/webpack/plugin');
 
 function whenNativeHMRTriggeredWith(changedFiles) {
   changedData.changedFiles = changedFiles;

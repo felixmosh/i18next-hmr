@@ -20,7 +20,7 @@
     "cross-env": "^7.0.2",
     "css-loader": "^5.2.6",
     "file-loader": "^6.0.0",
-    "i18next-hmr": "^2.0.0",
+    "i18next-hmr": "^3.0.0",
     "vue-loader": "^15.9.3",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.7.7",

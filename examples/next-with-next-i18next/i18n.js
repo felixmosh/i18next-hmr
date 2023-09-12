@@ -24,8 +24,10 @@ const nextI18Next = new NextI18Next({
     process.env.NODE_ENV !== 'production'
       ? [
           new HMRPlugin({
-            client: typeof window !== 'undefined',
-            server: typeof window === 'undefined',
+            webpack: {
+              client: typeof window !== 'undefined',
+              server: typeof window === 'undefined',
+            },
           }),
         ]
       : undefined,
