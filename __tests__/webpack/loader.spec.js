@@ -1,4 +1,4 @@
-const loader = require('../lib/webpack/loader');
+const loader = require('../../lib/webpack/loader');
 
 describe('loader', () => {
   let context;
