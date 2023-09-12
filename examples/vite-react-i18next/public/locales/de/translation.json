@@ -1,0 +1,8 @@
+{
+  "title": "Vite + React",
+  "button_text": "anzahl ist {{count}}",
+  "description": {
+    "part1": "Bearbeiten Sie <0>src/App.jsx</0> und speichern Sie, um HMR zu testen",
+    "part2": "Klicken Sie auf die Logos von Vite und React, um mehr zu erfahren"
+  }
+}
