@@ -2,9 +2,13 @@ export declare class HMRPlugin {
   type: '3rdParty';
   constructor(
     hmrOptions: Partial<{
-      client: boolean;
-      viteClient: boolean;
-      server: boolean;
+      webpack: Partial<{
+        client: boolean;
+        server: boolean;
+      }>;
+      vite: {
+        client: boolean;
+      };
     }>
   );
   init(i18nInstance: any): void;

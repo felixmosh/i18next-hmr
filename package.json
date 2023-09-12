@@ -16,8 +16,11 @@
   },
   "license": "MIT",
   "author": "felixmosh",
-  "main": "client.js",
-  "types": "client.d.ts",
+  "exports": {
+    "./plugin": "./lib/plugin.js",
+    "./webpack": "./lib/webpack/plugin.js",
+    "./vite": "./lib/vite/plugin.js"
+  },
   "scripts": {
     "test": "jest",
     "version": "auto-changelog -p && git add CHANGELOG.md",
