@@ -14,7 +14,7 @@ const instance = i18n
   // pass the i18n instance to react-i18next.
   .use(initReactI18next);
 
-if (process.env.NODE_ENV !== 'production') {
+if (import.meta.env.MODE !== 'production') {
   instance.use(new HMRPlugin({ vite: { client: true } }));
 }
 
