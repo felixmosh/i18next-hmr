@@ -15,7 +15,7 @@
     "i18next-hmr": "^3.0.0"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.19.2",
     "i18next": "^20.3.1",
     "next": "^12.1.0",
     "next-i18next": "^4.5.0",
