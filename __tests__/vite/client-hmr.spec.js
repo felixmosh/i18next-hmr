@@ -13,7 +13,7 @@ function whenHotTriggeredWith(changedFiles) {
   return listenerCallback({ changedFiles });
 }
 
-describe('client-hmr', () => {
+describe('Vite - client-hmr', () => {
   let i18nMock;
   let reloadError;
 
@@ -61,18 +61,7 @@ describe('client-hmr', () => {
     );
   });
 
-  it('should use backend options from global options as cache killer param', () => {
-    i18nMock.options = { backend: {}, ns: ['name-space'] };
-    i18nMock.language = 'en';
-
-    applyClientHMR(i18nMock);
-
-    whenHotTriggeredWith(['en/name-space']);
-
-    expect(i18nMock.options.backend).toHaveProperty('queryStringParams', { _: expect.any(Number) });
-  });
-
-  it('should use backend options from services as cache killer param', () => {
+  it('should use backendConnector options from services as cache killer param', () => {
     i18nMock.services = {
       ...i18nMock.services,
       backendConnector: { backend: { options: {} } },

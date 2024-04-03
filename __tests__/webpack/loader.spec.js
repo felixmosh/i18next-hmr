@@ -1,6 +1,6 @@
 const loader = require('../../lib/webpack/loader');
 
-describe('loader', () => {
+describe('Webpack - loader', () => {
   let context;
   const options = ['en/namespace'];
   const query = {

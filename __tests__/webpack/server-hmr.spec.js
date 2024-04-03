@@ -13,7 +13,7 @@ function whenNativeHMRTriggeredWith(changedFiles) {
   return acceptCallback();
 }
 
-describe('server-hmr', () => {
+describe('Webpack - server-hmr', () => {
   let i18nMock;
   let reloadError;
 
