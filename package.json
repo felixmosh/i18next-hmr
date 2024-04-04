@@ -22,6 +22,19 @@
     "./webpack": "./lib/webpack/plugin.js",
     "./vite": "./lib/vite/plugin.js"
   },
+  "typesVersions": {
+    "*": {
+      "plugin": [
+        "./lib/plugin.d.ts"
+      ],
+      "webpack": [
+        "./lib/webpack/plugin.d.ts"
+      ],
+      "vite": [
+        "./lib/vite/plugin.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "test": "jest",
     "version": "auto-changelog -p && git add CHANGELOG.md",
