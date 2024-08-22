@@ -78,6 +78,19 @@ describe('Vite - client-hmr', () => {
     });
   });
 
+  it('should not throw backendConnector options is not available', () => {
+    i18nMock.services = {
+      ...i18nMock.services,
+      backendConnector: { backend: {} },
+    };
+    i18nMock.language = 'en';
+    i18nMock.options = { ns: ['name-space'] };
+
+    applyClientHMR(i18nMock);
+
+    expect(() => whenHotTriggeredWith(['en/name-space'])).not.toThrow();
+  });
+
   it('should trigger reload when translation file changed', async () => {
     i18nMock.options = { backend: {}, ns: ['name-space'] };
     i18nMock.language = 'en';
