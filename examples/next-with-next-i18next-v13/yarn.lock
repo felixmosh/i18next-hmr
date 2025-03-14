@@ -154,10 +154,10 @@ i18next-fs-backend@^2.1.1:
   resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-2.1.2.tgz#1431d30385eae5bcc8a5bb91e2276f8c74e37fcc"
   integrity sha512-y9vl8HC8b1ayqZELzKvaKgnphrxgbaGGSNQjPU0JoTVP1M3NI6C69SwiAAXi6xuF1FSySJG52EdQZdMUETlwRA==
 
-i18next-hmr@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/i18next-hmr/-/i18next-hmr-1.8.0.tgz#7ac501c94f85fa072dd801c4115c911d7c153bb0"
-  integrity sha512-MDC3NPoDL0HAb/IK6Pet/3iecZeGBYDrfS0v8i/pc1u9IpPSGXYEsmF5EtDJZYvJBfKIAUn3f3WlRl+JILNs7A==
+i18next-hmr@^3.0.0:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/i18next-hmr/-/i18next-hmr-3.1.3.tgz#5073673849412b2b4e7d34adeb97e42898e30ade"
+  integrity sha512-zoM4B6toVk48rAMl0t9eV+ldEq9HIO9+bek8H1aGSLQZAjPSBQCUggkxdk0vQjEWSKLsssxZqZBAWS+Ow1rcsA==
 
 i18next-http-backend@^1.4.1:
   version "1.4.1"
@@ -186,9 +186,9 @@ loose-envify@^1.1.0, loose-envify@^1.4.0:
     js-tokens "^3.0.0 || ^4.0.0"
 
 nanoid@^3.1.30:
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
-  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
+  version "3.3.9"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.9.tgz#e0097d8e026b3343ff053e9ccd407360a03f503a"
+  integrity sha512-SppoicMGpZvbF1l3z4x7No3OlIjP7QJvC9XR7AhZr1kL133KHnKPztkKDc+Ir4aJ/1VhTySrtKhrsycmrMQfvg==
 
 next-i18next@13.2.2:
   version "13.2.2"
