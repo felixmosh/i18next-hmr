@@ -1,5 +1,5 @@
 {
-  "name": "v12",
+  "name": "v13",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -11,7 +11,7 @@
   "dependencies": {
     "i18next": "^22.5.0",
     "i18next-http-backend": "^1.4.1",
-    "next": "12.2.2",
+    "next": "^13",
     "next-i18next": "13.2.2",
     "prop-types": "15.8.1",
     "react": "18.2.0",
