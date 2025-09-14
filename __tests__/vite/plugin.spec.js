@@ -1,12 +1,6 @@
 const { i18nextHMRPlugin } = require('../../lib/vite/plugin');
 
-function initPlugin({ localesDir, localesDirs, root = '/root', platform = process.platform } = {}) {
-  if (process.platform !== platform) {
-    Object.defineProperty(process, 'platform', {
-      value: platform,
-    });
-  }
-
+function initPlugin({ localesDir, localesDirs, root = '/root' } = {}) {
   const plugin = i18nextHMRPlugin({ localesDir, localesDirs });
   plugin.configResolved({
     root,
@@ -29,16 +23,8 @@ function triggerHotUpdateWith({ file }, plugin) {
 
 describe('Vite - plugin', () => {
   let plugin;
-  let originalPlatform;
   beforeEach(() => {
-    originalPlatform = process.platform;
     plugin = initPlugin();
-  });
-
-  afterEach(() => {
-    Object.defineProperty(process, 'platform', {
-      value: originalPlatform,
-    });
   });
 
   if (process.platform !== 'win32') {
