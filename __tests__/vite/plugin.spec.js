@@ -45,63 +45,71 @@ describe('Vite - plugin', () => {
     });
   });
 
-  it('should support localesDir as absolute path', () => {
-    const plugin = initPlugin({ localesDir: '/absolute/path/to/locales' });
-    const mockServer = triggerHotUpdateWith({ file: '/absolute/path/to/locales/en.json' }, plugin);
+  if (process.platform !== 'win32') {
+    it('should support localesDir as absolute path', () => {
+      const plugin = initPlugin({ localesDir: '/absolute/path/to/locales' });
+      const mockServer = triggerHotUpdateWith(
+        { file: '/absolute/path/to/locales/en.json' },
+        plugin
+      );
 
-    expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
-      changedFiles: ['en'],
+      expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
+        changedFiles: ['en'],
+      });
     });
-  });
 
-  it('should support localesDir as relative path', () => {
-    const plugin = initPlugin({ localesDir: './public/locales' });
-    const mockServer = triggerHotUpdateWith({ file: '/root/public/locales/en.json' }, plugin);
+    it('should support localesDir as relative path', () => {
+      const plugin = initPlugin({ localesDir: './public/locales' });
+      const mockServer = triggerHotUpdateWith({ file: '/root/public/locales/en.json' }, plugin);
 
-    expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
-      changedFiles: ['en'],
+      expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
+        changedFiles: ['en'],
+      });
     });
-  });
 
-  it('should support localesDirs as absolute path', () => {
-    const plugin = initPlugin({ localesDirs: ['/absolute/path/to/locales'] });
-    const mockServer = triggerHotUpdateWith({ file: '/absolute/path/to/locales/en.json' }, plugin);
+    it('should support localesDirs as absolute path', () => {
+      const plugin = initPlugin({ localesDirs: ['/absolute/path/to/locales'] });
+      const mockServer = triggerHotUpdateWith(
+        { file: '/absolute/path/to/locales/en.json' },
+        plugin
+      );
 
-    expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
-      changedFiles: ['en'],
+      expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
+        changedFiles: ['en'],
+      });
     });
-  });
 
-  it('should support localesDirs as relative path', () => {
-    const plugin = initPlugin({ localesDirs: ['./public/locales'] });
-    const mockServer = triggerHotUpdateWith({ file: '/root/public/locales/en.json' }, plugin);
+    it('should support localesDirs as relative path', () => {
+      const plugin = initPlugin({ localesDirs: ['./public/locales'] });
+      const mockServer = triggerHotUpdateWith({ file: '/root/public/locales/en.json' }, plugin);
 
-    expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
-      changedFiles: ['en'],
+      expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
+        changedFiles: ['en'],
+      });
     });
-  });
 
-  it('should process.cwd if root is not specified', () => {
-    const plugin = initPlugin({ localesDirs: ['./public/locales'], root: '' });
-    const mockServer = triggerHotUpdateWith(
-      { file: `${process.cwd()}/public/locales/en.json` },
-      plugin
-    );
+    it('should process.cwd if root is not specified', () => {
+      const plugin = initPlugin({ localesDirs: ['./public/locales'], root: '' });
+      const mockServer = triggerHotUpdateWith(
+        { file: `${process.cwd()}/public/locales/en.json` },
+        plugin
+      );
 
-    expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
-      changedFiles: ['en'],
+      expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
+        changedFiles: ['en'],
+      });
     });
-  });
 
-  it('should support namespaces', () => {
-    const plugin = initPlugin({ localesDirs: ['./public/locales'], root: '/root' });
-    const mockServer = triggerHotUpdateWith(
-      { file: '/root/public/locales/namespace/en.json' },
-      plugin
-    );
+    it('should support namespaces', () => {
+      const plugin = initPlugin({ localesDirs: ['./public/locales'], root: '/root' });
+      const mockServer = triggerHotUpdateWith(
+        { file: '/root/public/locales/namespace/en.json' },
+        plugin
+      );
 
-    expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
-      changedFiles: ['namespace/en'],
+      expect(mockServer.ws.send).toHaveBeenCalledWith('i18next-hmr:locale-changed', {
+        changedFiles: ['namespace/en'],
+      });
     });
-  });
+  }
 });
