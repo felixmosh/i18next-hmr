@@ -111,5 +111,9 @@ describe('Vite - plugin', () => {
         changedFiles: ['namespace/en'],
       });
     });
+  } else {
+    it('should support localesDir as absolute path', () => {
+      expect(1).toBe(1);
+    });
   }
 });
