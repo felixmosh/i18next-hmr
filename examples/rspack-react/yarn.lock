@@ -628,12 +628,12 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
-cross-fetch@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-4.0.0.tgz#f037aef1580bb3a1a35164ea2a848ba81b445983"
-  integrity sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==
+cross-fetch@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-4.1.0.tgz#8f69355007ee182e47fa692ecbaa37a52e43c3d2"
+  integrity sha512-uKm5PU+MHTootlWEY+mZ4vvXoCn4fLQxT9dSc1sXVMSFkINTJVN8cAQROpwcKm8bJ/c7rgZVIBWzH5T78sNZZw==
   dependencies:
-    node-fetch "^2.6.12"
+    node-fetch "^2.7.0"
 
 cross-spawn@^7.0.3:
   version "7.0.6"
@@ -1107,12 +1107,12 @@ i18next-hmr@^3.0.4:
   resolved "https://registry.yarnpkg.com/i18next-hmr/-/i18next-hmr-3.0.4.tgz#d3a7037bc32d0a80640339814fe98c711b218f24"
   integrity sha512-vTcCn8SBO8BRfspkyiKYBKdXo397q+MCvIAdmtP9pstj9VZXI0xU7KhhVnoCDm7cTKVRHDTpZyN1YAfbKBtEWw==
 
-i18next-http-backend@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-2.5.0.tgz#8396a7df30bfe722eff7a65f629df32a61720414"
-  integrity sha512-Z/aQsGZk1gSxt2/DztXk92DuDD20J+rNudT7ZCdTrNOiK8uQppfvdjq9+DFQfpAnFPn3VZS+KQIr1S/W1KxhpQ==
+i18next-http-backend@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-3.0.5.tgz#b1763149492fb68b601da227db986eb046896530"
+  integrity sha512-QaWHnsxieEDcqKe+vo/RFqpiIFRi/KBqlOSPcUlvinBaISCeiTRCbtrazHAjtHtsLC66oDsROAH8frWkQzfMMQ==
   dependencies:
-    cross-fetch "4.0.0"
+    cross-fetch "4.1.0"
 
 i18next@^23.10.1:
   version "23.10.1"
@@ -1361,7 +1361,7 @@ negotiator@0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-node-fetch@^2.6.12:
+node-fetch@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
