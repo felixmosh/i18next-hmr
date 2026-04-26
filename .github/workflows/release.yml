@@ -29,6 +29,6 @@ jobs:
           CI: true
 
       - name: Release
-        run: yarn release-it --ci --only-version --npm.publish --github.release --no-hooks
+        run: yarn release-it --ci --only-version --npm.publish --github.release --no-hooks --no-git.changelog
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
