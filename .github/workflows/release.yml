@@ -29,8 +29,6 @@ jobs:
           CI: true
 
       - name: Release
-        uses: release-it/release-it@v18
-        with:
-          args: "--github.release"
+        run: yarn release-it --only-version --npm.publish --github.release --no-hooks
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
