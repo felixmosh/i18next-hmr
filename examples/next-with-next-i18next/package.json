@@ -17,7 +17,7 @@
   "dependencies": {
     "express": "^4.22.0",
     "i18next": "^20.3.1",
-    "next": "^15.5.15",
+    "next": "^16.2.4",
     "next-i18next": "^4.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
