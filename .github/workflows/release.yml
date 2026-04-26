@@ -29,6 +29,6 @@ jobs:
           CI: true
 
       - name: Release
-        run: npx release-it --ci --no-increment --no-git --npm.publish --github.release --no-hooks
+        run: npx release-it --ci --no-increment --no-git --npm.publish --github.release --no-hooks --npm.provenance
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
