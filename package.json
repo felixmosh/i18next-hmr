@@ -13,7 +13,7 @@
   "bugs": "https://github.com/felixmosh/i18next-hmr/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/felixmosh/i18next-hmr"
+    "url": "git+https://github.com/felixmosh/i18next-hmr.git"
   },
   "license": "MIT",
   "author": "felixmosh",
