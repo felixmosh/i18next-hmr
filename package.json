@@ -64,8 +64,7 @@
   "release-it": {
     "npm": {
       "publish": false,
-      "skipChecks": true,
-      "registry": "https://registry.npmjs.org"
+      "skipChecks": true
     },
     "git": {
       "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
