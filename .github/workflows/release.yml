@@ -31,7 +31,6 @@ jobs:
       - name: Release
         uses: release-it/release-it@v18
         with:
-          github:
-            release: true
+          args: "--github.release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
