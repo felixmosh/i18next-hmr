@@ -62,15 +62,15 @@
     "release-it": "^16.1.5"
   },
   "release-it": {
+    "npm": {
+      "publish": false
+    },
     "git": {
       "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
     },
     "hooks": {
       "before:init": "yarn test",
       "after:bump": "npx auto-changelog -p"
-    },
-    "github": {
-      "release": true
     }
   }
 }
