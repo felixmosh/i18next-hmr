@@ -357,6 +357,46 @@ describe('Webpack - client-hmr', () => {
     expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en-US');
   });
 
+  it('should apply update when current language is different but matches fallbackLng', async () => {
+    i18nMock.options = {
+      backend: {},
+      ns: ['name-space'],
+      fallbackLng: 'de',
+    };
+    i18nMock.language = 'en';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith(['de/name-space']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['de'],
+      ['name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
+  });
+
+  it('should apply update when current language is different but matches one of fallbackLng values', async () => {
+    i18nMock.options = {
+      backend: {},
+      ns: ['name-space'],
+      fallbackLng: ['fr', 'de', 'es'],
+    };
+    i18nMock.language = 'en';
+
+    applyClientHMR(i18nMock);
+
+    await whenHotTriggeredWith(['de/name-space']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalledWith(
+      ['de'],
+      ['name-space'],
+      expect.any(Function)
+    );
+    expect(i18nMock.changeLanguage).toHaveBeenCalledWith('en');
+  });
+
   describe('multiple files', () => {
     it('should support change of multiple files', async () => {
       i18nMock.options = { backend: {}, ns: ['name-space', 'name-space2'] };
