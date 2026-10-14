@@ -67,6 +67,18 @@ describe('Webpack - server-hmr', () => {
       expect(global.console.log).not.toHaveBeenCalledWith(expect.stringContaining('callback mode'));
     });
 
+    it('should produce no logs when the `silent` option is enabled', () => {
+      jest.spyOn(global.console, 'log');
+      reloadError = 'reload failed';
+      mockModule.hot.accept.mockReset(); // re-register only the silent listener
+
+      applyServerHMR(i18nMock, { silent: true });
+      whenNativeHMRTriggeredWith(['en/name-space']);
+
+      expect(i18nMock.reloadResources).toHaveBeenCalled();
+      expect(global.console.log).not.toHaveBeenCalled();
+    });
+
     it('should reload resources on updated lang, ns', () => {
       const update = { lang: 'en', ns: 'name-space' };
       whenNativeHMRTriggeredWith([`${update.lang}/${update.ns}`]);
@@ -258,6 +270,17 @@ describe('Webpack - server-hmr', () => {
       expect(global.console.log).toHaveBeenCalledWith(
         expect.stringContaining('Server HMR has started - callback mode')
       );
+    });
+
+    it('should produce no logs when the `silent` option is enabled', () => {
+      jest.spyOn(global.console, 'log');
+      reloadError = 'reload failed';
+
+      applyServerHMR(i18nMock, { silent: true });
+      plugin.callbacks[0]({ changedFiles: ['en/name-space'] });
+
+      expect(i18nMock.reloadResources).toHaveBeenCalled();
+      expect(global.console.log).not.toHaveBeenCalled();
     });
 
     it('should reload resources on updated lang, ns', () => {

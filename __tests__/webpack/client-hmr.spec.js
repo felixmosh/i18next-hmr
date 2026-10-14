@@ -201,6 +201,23 @@ describe('Webpack - client-hmr', () => {
     );
   });
 
+  it('should produce no logs when the `silent` option is enabled', async () => {
+    jest.spyOn(global.console, 'log');
+    jest.spyOn(global.console, 'warn');
+    jest.spyOn(global.console, 'error');
+    i18nMock.options = { backend: {}, ns: ['name-space'] };
+    i18nMock.language = 'en';
+    reloadError = 'reload failed';
+
+    applyClientHMR(i18nMock, { silent: true });
+    await whenHotTriggeredWith(['en/name-space']);
+
+    expect(i18nMock.reloadResources).toHaveBeenCalled();
+    expect(global.console.log).not.toHaveBeenCalled();
+    expect(global.console.warn).not.toHaveBeenCalled();
+    expect(global.console.error).not.toHaveBeenCalled();
+  });
+
   it('should ignore changes of none loaded namespace', async () => {
     jest.spyOn(global.console, 'log');
     i18nMock.options = { backend: {}, ns: ['name-space'] };

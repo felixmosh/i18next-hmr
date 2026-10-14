@@ -53,6 +53,7 @@ const instance = i18next.use(Backend); // http-backend is required for client si
 
 if (process.env.NODE_ENV !== 'production') {
    instance.use(new HMRPlugin({
+      silent: true, // disables all logs the plugin produces
       webpack: {
          client: typeof window !== 'undefined', // enables client side HMR in webpack
          server: typeof window === 'undefined'  // enables server side HMR in webpack
@@ -72,6 +73,12 @@ module.exports = instance;
 
 
 Start the app with `NODE_ENV=development`
+
+### Options
+
+| Option   | Type      | Default | Description                                                |
+| -------- | --------- | ------- | ---------------------------------------------------------- |
+| `silent` | `boolean` | `false` | When `true`, the plugin produces no console output at all. |
 
 ### Server side
 
