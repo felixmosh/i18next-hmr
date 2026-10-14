@@ -59,10 +59,10 @@
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^24.12.2",
-    "auto-changelog": "^2.5.0",
+    "auto-changelog": "^2.7.0",
     "jest": "^30.3.0",
-    "prettier": "^3.8.3",
-    "release-it": "^20.0.1"
+    "prettier": "^3.9.10",
+    "release-it": "^21.1.1"
   },
   "release-it": {
     "npm": {
