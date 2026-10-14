@@ -16,9 +16,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
         with:
-          # release-it runs `git symbolic-ref HEAD` during init, which fails on a
-          # detached HEAD (a tag checkout). Give it the branch the tag points to.
-          ref: master
+          # Build the tagged commit, not whatever master points at now.
+          ref: ${{ github.ref }}
           fetch-depth: 0
 
       - name: Setup Node
