@@ -34,6 +34,6 @@ jobs:
           CI: true
 
       - name: Release
-        run: npx release-it --ci --no-increment --npm.publish --github.release --git.skip.commit --git.skip.tag --git.push=false
+        run: npx release-it --ci --no-increment --npm.publish --github.release --git.commit=false --git.tag=false --git.push=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
